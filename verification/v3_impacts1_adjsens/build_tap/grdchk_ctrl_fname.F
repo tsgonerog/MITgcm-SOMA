@@ -1,1 +1,0 @@
-../../../pkg/grdchk/grdchk_ctrl_fname.F
