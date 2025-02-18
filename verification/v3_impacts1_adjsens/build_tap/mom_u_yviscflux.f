@@ -182,9 +182,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -382,6 +379,40 @@ C     Package-specific Options & Macros go here
 
 C A trick to conserve U,V momemtum next to a step (vertical plane)
 C  or a coastline edge (horizontal plane).
+
+C CPP options file for mom_common package
+C Use this file for selecting CPP options within the mom_common package
+
+
+C     Package-specific options go here
+
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic viscosity -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C viscosity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+
+C allow LeithQG coefficient to be calculated
+
+C allow isotropic 3-D Smagorinsky viscosity
+
+C allow full 3D specification of horizontal Laplacian Viscosity
+
+C allow full 3D specification of horizontal Biharmonic Viscosity
+
+C Compute bottom drag coefficents, following the logarithmic law of the wall,
+C as a function of grid cell thickness and roughness length
+C zRoughBot (order 0.01m), assuming a von Karman constant = 0.4.
+
+C Compute extra momentum tendency diagnostics for bottom and ice-shelf drag.
+C The code does not work with using implicit bottom or ice-shelf
+C drag (selectImplicitDrag = 2). For non-r* vertical coordinate, these
+C tendency diagnostics can be derived from existing diagnostics for
+C frictional stress (botTauX etc.) and therefore are not necessarily needed.
 
 
 CBOP
@@ -3052,12 +3083,12 @@ C  yViscFluxU           :: viscous fluxes
 
 C !LOCAL VARIABLES: ====================================================
 C  i,j                  :: loop indices
-      INTEGER I,J
+      INTEGER i,j
 CEOP
 
 C     - Laplacian  and bi-harmonic terms
-      DO j=1-Oly+1,sNy+Oly
-       DO i=1-Olx,sNx+Olx
+      DO j=1-OLy+1,sNy+OLy
+       DO i=1-OLx,sNx+OLx
         yViscFluxU(i,j) =
      &    dxV(i,j,bi,bj)*drF(k)*hFacZ(i,j)
      &     *(

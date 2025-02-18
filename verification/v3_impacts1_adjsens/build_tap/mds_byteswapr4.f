@@ -76,9 +76,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -263,34 +260,32 @@ C     leave it empty (if EXCLUDE_OPEN_ACTION) or set it to proper value
 
 
 
-      subroutine MDS_BYTESWAPR4( n, arr )
+      SUBROUTINE MDS_BYTESWAPR4( n, arr )
 C IN:
-C   n    integer :: Number of 4-byte words in arr
+C   n    INTEGER :: Number of 4-byte words in arr
 C IN/OUT:
 C   arr  real*4  :: Array declared as real*4(n)
 C
 C Created: 05/05/99 adcroft@mit.edu (This is an unfortunate hack!!)
 
-      implicit none
-
+      IMPLICIT NONE
 
 C Arguments
-      integer n
-      character*(*) arr
+      INTEGER n
+      CHARACTER*(*) arr
 
 C Local
-      integer i
-      character*(1) cc
+      INTEGER i
+      CHARACTER*(1) cc
 
-      do i=1,4*n,4
+      DO i=1,4*n,4
        cc=arr(i:i)
        arr(i:i)=arr(i+3:i+3)
        arr(i+3:i+3)=cc
        cc=arr(i+1:i+1)
        arr(i+1:i+1)=arr(i+2:i+2)
        arr(i+2:i+2)=cc
-      enddo
+      ENDDO
 
-
-      return
-      end
+      RETURN
+      END

@@ -188,9 +188,6 @@ C     a different file for each tile) and read are thread-safe.
 C
 C--   Flag to turn off the writing of error message to ioUnit zero
 C
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-C
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -388,6 +385,40 @@ C     Package-specific Options & Macros go here
 C
 C A trick to conserve U,V momemtum next to a step (vertical plane)
 C  or a coastline edge (horizontal plane).
+C
+C CPP options file for mom_common package
+C Use this file for selecting CPP options within the mom_common package
+C
+C
+C     Package-specific options go here
+C
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic viscosity -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+C
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C viscosity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+C
+C allow LeithQG coefficient to be calculated
+C
+C allow isotropic 3-D Smagorinsky viscosity
+C
+C allow full 3D specification of horizontal Laplacian Viscosity
+C
+C allow full 3D specification of horizontal Biharmonic Viscosity
+C
+C Compute bottom drag coefficents, following the logarithmic law of the wall,
+C as a function of grid cell thickness and roughness length
+C zRoughBot (order 0.01m), assuming a von Karman constant = 0.4.
+C
+C Compute extra momentum tendency diagnostics for bottom and ice-shelf drag.
+C The code does not work with using implicit bottom or ice-shelf
+C drag (selectImplicitDrag = 2). For non-r* vertical coordinate, these
+C tendency diagnostics can be derived from existing diagnostics for
+C frictional stress (botTauX etc.) and therefore are not necessarily needed.
 C
 C
 CBOP
@@ -3077,8 +3108,8 @@ C
       ENDDO
       DO j=sny+oly-1,1-oly+1,-1
         DO i=snx+olx,1-olx+1,-1
-          tempb = drf(k)*hfacz(i, j)*dyu(i, j, bi, bj)*recip_dxv(i, j, 
-     +      bi, bj)*fzonb(i, j)
+          tempb = dyu(i, j, bi, bj)*sqcosfacv(j, bi, bj)*drf(k)*hfacz(i
+     +      , j)*recip_dxv(i, j, bi, bj)*fzonb(i, j)
           fzonb(i, j) = 0.D0
           vfldb(i, j) = vfldb(i, j) + tempb
           vfldb(i-1, j) = vfldb(i-1, j) - tempb

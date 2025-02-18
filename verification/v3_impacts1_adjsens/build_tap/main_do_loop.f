@@ -179,9 +179,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -393,17 +390,15 @@ C Use this file for selecting options within the GAD package
 
 C     Package-specific Options & Macros go here
 
-C This flag selects the form of COSINE(lat) scaling of bi-harmonic term.
-C *only for use on a lat-lon grid*
-C Setting this flag here only affects the bi-harmonic tracer terms; to
-C use COSINEMETH_III in the momentum equations set it CPP_OPTIONS.h
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic diffusivity -- only on lat-lon grid.
+C Setting this flag here only affects tracer diffusivity; to use it
+C in the momentum equations it needs to be set in MOM_COMMON_OPTIONS.h
 
-C This selects isotropic scaling of harmonic and bi-harmonic term when
-C using the COSINE(lat) scaling.
-C Setting this flag here only affects the tracer diffusion terms; to
-C use ISOTROPIC_COS_SCALING of the horizontal viscosity terms in the
-C momentum equations set it CPP_OPTIONS.h; the following line
-C even overrides setting the flag in CPP_OPTIONS.h
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C diffusivity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects tracer diffusivity; to use it
+C in the momentum equations it needs to be set in MOM_COMMON_OPTIONS.h
 
 C As of checkpoint41, the inclusion of multi-dimensional advection
 C introduces excessive recomputation/storage for the adjoint.
@@ -3000,6 +2995,13 @@ C     EfluxP - p-component of Eliassen-Palm flux vector
       Real*8  phiTide2d(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       Real*8  pLoad    (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       Real*8  sIceLoad (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
+C     gcmSST :: model in-situ Sea Surface Temperature (SST); corresponds to
+C               surface-level model variable "theta", except if using TEOS-10 ;
+C               in that case a conversion from model Conservative Temperature
+C               "theta" is applied. Note: not defined under an ice-shelf
+      COMMON /FFIELDS_INSITU_TEMP/ gcmSST
+      Real*8  gcmSST(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
 
 
 C- jmc: commented out until corresponding (ghost-like) code apparition

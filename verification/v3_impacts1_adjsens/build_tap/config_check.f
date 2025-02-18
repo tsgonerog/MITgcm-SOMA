@@ -179,9 +179,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -379,6 +376,16 @@ C Use this file for selecting CPP options within the mom_common package
 
 
 C     Package-specific options go here
+
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic viscosity -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C viscosity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
 
 C allow LeithQG coefficient to be calculated
 
@@ -1897,6 +1904,32 @@ C-- Logical flags for selecting packages
      &        useMYPACKAGE
 
 C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
+C- Common file for length scales
+
+
+C--   COMMON /MOM_VISC_PAR_L/ logical-type parameters for Momemtum viscosity
+C     useHarmonicVisc   :: harmonic   horizontal viscosity is used
+C     useBiharmonicVisc :: biharmonic horizontal viscosity is used
+C     useVariableVisc   :: variable (in space or time) viscosity is used
+      COMMON /MOM_VISC_PAR_L/
+     &        useHarmonicVisc, useBiharmonicVisc, useVariableVisc
+      LOGICAL useHarmonicVisc, useBiharmonicVisc, useVariableVisc
+
+      COMMON /MOM_VISC_LENGTH/ L2_D, L2_Z,
+     &                         L3_D, L3_Z,
+     &                         L4rdt_D, L4rdt_Z
+      Real*8 L2_D(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 L2_Z(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 L3_D(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 L3_Z(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 L4rdt_D(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 L4rdt_Z(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
+
+
+
+
+
 
 C     !INPUT/OUTPUT PARAMETERS:
 C     === Routine arguments ===
@@ -2570,6 +2603,20 @@ C--   Momentum related limitations:
      &   '"highOrderVorticity" conflicts with "upwindVorticity"'
         CALL PRINT_ERROR( msgBuf, myThid )
         errCount = errCount + 1
+       ENDIF
+      ENDIF
+      IF ( vectorInvariantMomentum .AND. momViscosity .AND.
+     &     usingSphericalPolarGrid .AND. cosPower.NE.zeroRL ) THEN
+       IF ( useBiharmonicVisc .AND. no_slip_sides ) THEN
+        WRITE(msgBuf,'(2A)') 'CONFIG_CHECK: inconsistent ',
+     &    'no_slip_sides & COSINEMETH_III in mom_vecinv'
+        CALL PRINT_ERROR( msgBuf, myThid )
+        errCount = errCount + 1
+       ELSEIF ( useBiharmonicVisc ) THEN
+        WRITE(msgBuf,'(2A)') '** WARNING ** CONFIG_CHECK: ',
+     &    'COSINEMETH_III not implemented in mom_vecinv'
+        CALL PRINT_MESSAGE( msgBuf, errorMessageUnit,
+     &                      SQUEEZE_RIGHT, myThid )
        ENDIF
       ENDIF
       IF ( .NOT.vectorInvariantMomentum .AND. momAdvection ) THEN

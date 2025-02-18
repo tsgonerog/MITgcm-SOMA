@@ -1,11 +1,11 @@
 # Multithreaded + multi-processing makefile for:
 #    Linux sverdrup.oden.utexas.edu 5.14.0-503.15.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Tue Nov 26 17:24:29 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
 # This makefile was generated automatically on
-#    Mon Feb 17 01:55:27 PM CST 2025
+#    Tue Feb 18 12:22:58 PM CST 2025
 # by the command:
 #    ../../../tools/genmake2 -tap -of ../../../tools/build_options/linux_amd64_gfortran -mods ../code_tap
 # executed by:
-#    tshahriar@sverdrup.oden.utexas.edu:/home/tshahriar/tools_and_software/MITgcm/verification/v3_impacts1_adjsens/build_tap
+#    tshahriar@sverdrup.oden.utexas.edu:/home/tshahriar/My_GitHub_Repos/MITgcm-SOMA/verification/v3_impacts1_adjsens/build_tap
 #
 # OPTFILE="../../../tools/build_options/linux_amd64_gfortran"
 #
@@ -1942,7 +1942,6 @@ H_SRC_FILES =  \
  SIZE.h \
  adcommon.h \
  AUTODIFF.h \
- AUTODIFF_MYFIELDS.h \
  AUTODIFF_PARAMS.h \
  AUTODIFF_STORE.h \
  check_lev1_dir_forcing.h \
@@ -2184,9 +2183,9 @@ FC_NAMEMANGLE.h:
 
 BUILD_INFO.h:
 	@echo Creating $@ ...
-	-echo "#define THISVER 'checkpoint69b'" > $@
+	-echo "#define THISVER 'checkpoint69c'" > $@
 	-echo "#define THISUSER 'tshahriar'" >> $@
-	-echo "#define THISDATE 'Mon Feb 17 01:55:27 PM CST 2025'" >> $@
+	-echo "#define THISDATE 'Tue Feb 18 12:22:58 PM CST 2025'" >> $@
 	-echo "#define THISHOST 'sverdrup.oden.utexas.edu'" >> $@
 
 # The normal chain of rules is (  .F - .f - .o  )
@@ -2554,7 +2553,7 @@ ini_masks_etc.o: ini_masks_etc.f
 	if [ ! -L $@ ]; then $(LN) ../code_tap/$@ $@; fi
 
 #  These files are linked from $(ROOTDIR)/pkg/autodiff ( aka ../../../pkg/autodiff )
- active_file_ad.F active_file_control.F active_file_control_slice.F active_file.F active_file_gen_ad.F active_file_gen.F active_file_gen_g.F active_file_g.F active_file_loc_ad.F active_file_loc.F active_file_loc_g.F adautodiff_whtapeio_sync.F adcommon.h addamp_adj.F add_prefix.F addummy_for_etan.F addummy_in_dynamics.F addummy_in_stepping.F adopen_adclose.F adread_adwrite.F adread_adwrite_i.F adzero_adj.F autodiff_check.F autodiff_findunit.F AUTODIFF.h autodiff_inadmode_set_ad.F autodiff_inadmode_set.F autodiff_inadmode_set_g.F autodiff_inadmode_unset_ad.F autodiff_inadmode_unset.F autodiff_inadmode_unset_g.F autodiff_ini_model_io.F autodiff_init_varia.F AUTODIFF_MYFIELDS.h AUTODIFF_PARAMS.h autodiff_readparms.F autodiff_restore.F autodiff_store.F AUTODIFF_STORE.h autodiff_whtapeio_sync.F cg2d_mad.F check_lev1_dir_forcing.h check_lev1_dir_ocephys.h checkpoint_lev1_directives.h checkpoint_lev1_template.h checkpoint_lev2_directives.h checkpoint_lev3_directives.h checkpoint_lev4_directives.h copy_ad_uv_outp.F copy_advar_outp.F damp_adj.F dummy_for_etan.F dummy_in_dynamics.F dummy_in_stepping.F dump_adj_xy.F dump_adj_xy_uv.F dump_adj_xyz.F dump_adj_xyz_uv.F ECCO_CPPOPTIONS.h g_common.h g_dummy_for_etan.F g_dummy_in_dynamics.F g_dummy_in_stepping.F global_max_ad.F global_sum_ad.F global_sum_tile_ad.F g_zero_adj.F myactivefunction_ad.F myactivefunction.F tamc.h zero_adj.F active_file_control.flow active_file.flow active_file_gen.flow active_file_loc.flow autodiff_inadmode.flow autodiff_whtapeio_sync.flow cg2d.flow checkpoint.flow common.flow damp_adj.flow dummy_for_etan.flow dummy_in_dynamics.flow dummy_in_stepping.flow global_max_ad.flow global_sum_ad.flow initialisation.flow model_ad.flow myactivefunction.flow system.flow zero_adj.flow :
+ active_file_ad.F active_file_control.F active_file_control_slice.F active_file.F active_file_gen_ad.F active_file_gen.F active_file_gen_g.F active_file_g.F active_file_loc_ad.F active_file_loc.F active_file_loc_g.F adautodiff_whtapeio_sync.F adcommon.h addamp_adj.F add_prefix.F addummy_for_etan.F addummy_in_dynamics.F addummy_in_stepping.F adopen_adclose.F adread_adwrite.F adread_adwrite_i.F adzero_adj.F autodiff_check.F autodiff_findunit.F AUTODIFF.h autodiff_inadmode_set_ad.F autodiff_inadmode_set.F autodiff_inadmode_set_g.F autodiff_inadmode_unset_ad.F autodiff_inadmode_unset.F autodiff_inadmode_unset_g.F autodiff_ini_model_io.F autodiff_init_varia.F AUTODIFF_PARAMS.h autodiff_readparms.F autodiff_restore.F autodiff_store.F AUTODIFF_STORE.h autodiff_whtapeio_sync.F cg2d_mad.F check_lev1_dir_forcing.h check_lev1_dir_ocephys.h checkpoint_lev1_directives.h checkpoint_lev1_template.h checkpoint_lev2_directives.h checkpoint_lev3_directives.h checkpoint_lev4_directives.h copy_ad_uv_outp.F copy_advar_outp.F damp_adj.F dummy_for_etan.F dummy_in_dynamics.F dummy_in_stepping.F dump_adj_xy.F dump_adj_xy_uv.F dump_adj_xyz.F dump_adj_xyz_uv.F ECCO_CPPOPTIONS.h g_common.h g_dummy_for_etan.F g_dummy_in_dynamics.F g_dummy_in_stepping.F global_max_ad.F global_sum_ad.F global_sum_tile_ad.F g_zero_adj.F myactivefunction_ad.F myactivefunction.F tamc.h zero_adj.F active_file_control.flow active_file.flow active_file_gen.flow active_file_loc.flow autodiff_inadmode.flow autodiff_whtapeio_sync.flow cg2d.flow checkpoint.flow common.flow damp_adj.flow dummy_for_etan.flow dummy_in_dynamics.flow dummy_in_stepping.flow global_max_ad.flow global_sum_ad.flow initialisation.flow model_ad.flow myactivefunction.flow system.flow zero_adj.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/autodiff/$@ $@; fi
 
 #  These files are linked from $(ROOTDIR)/pkg/cost ( aka ../../../pkg/cost )
@@ -3073,8 +3072,8 @@ chksum_tiled.f: EEPARAMS.h PACKAGES_CONFIG.h SIZE.h /usr/include/stdc-predef.h
 comm_stats.f: BAR2.h CPP_EEMACROS.h CPP_EEOPTIONS.h EEPARAMS.h EESUPPORT.h
 comm_stats.f: EXCH.h SIZE.h /usr/include/stdc-predef.h
 config_check.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h CTRL_OPTIONS.h
-config_check.f: EEPARAMS.h MOM_COMMON_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h
-config_check.f: SIZE.h /usr/include/stdc-predef.h
+config_check.f: EEPARAMS.h MOM_COMMON_OPTIONS.h MOM_VISC.h PACKAGES_CONFIG.h
+config_check.f: PARAMS.h SIZE.h /usr/include/stdc-predef.h
 config_summary.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 config_summary.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 config_summary.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h EOS.h
@@ -3438,21 +3437,20 @@ ctrl_map_genarr.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
 ctrl_map_genarr.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h
 ctrl_map_genarr.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
 ctrl_map_genarr.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
-ctrl_map_gentim2d.f: AUTODIFF_MYFIELDS.h CPP_EEMACROS.h CPP_EEOPTIONS.h
-ctrl_map_gentim2d.f: CPP_OPTIONS.h CTRL_DUMMY.h CTRL_GENARR.h CTRL.h
-ctrl_map_gentim2d.f: CTRL_OPTIONS.h CTRL_SIZE.h DXC_MACROS.h DXF_MACROS.h
-ctrl_map_gentim2d.f: DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h DYF_MACROS.h
-ctrl_map_gentim2d.f: DYG_MACROS.h DYU_MACROS.h EEPARAMS.h FCORI_MACROS.h
-ctrl_map_gentim2d.f: GRID.h GRID_MACROS.h HFACC_MACROS.h HFACS_MACROS.h
-ctrl_map_gentim2d.f: HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-ctrl_map_gentim2d.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
-ctrl_map_gentim2d.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
-ctrl_map_gentim2d.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
-ctrl_map_gentim2d.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
-ctrl_map_gentim2d.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
-ctrl_map_gentim2d.f: RECIP_HFACW_MACROS.h SIZE.h TANPHIATU_MACROS.h
-ctrl_map_gentim2d.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h XC_MACROS.h
-ctrl_map_gentim2d.f: YC_MACROS.h
+ctrl_map_gentim2d.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h CTRL_DUMMY.h
+ctrl_map_gentim2d.f: CTRL_GENARR.h CTRL.h CTRL_OPTIONS.h CTRL_SIZE.h
+ctrl_map_gentim2d.f: DXC_MACROS.h DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h
+ctrl_map_gentim2d.f: DYC_MACROS.h DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h
+ctrl_map_gentim2d.f: EEPARAMS.h FCORI_MACROS.h GRID.h GRID_MACROS.h
+ctrl_map_gentim2d.f: HFACC_MACROS.h HFACS_MACROS.h HFACW_MACROS.h
+ctrl_map_gentim2d.f: MASKS_MACROS.h MASKW_MACROS.h PACKAGES_CONFIG.h PARAMS.h
+ctrl_map_gentim2d.f: RA_MACROS.h RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
+ctrl_map_gentim2d.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
+ctrl_map_gentim2d.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
+ctrl_map_gentim2d.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
+ctrl_map_gentim2d.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h
+ctrl_map_gentim2d.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
+ctrl_map_gentim2d.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
 ctrl_map_ini_genarr.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
 ctrl_map_ini_genarr.f: CTRL_DUMMY.h CTRL_FIELDS.h CTRL_GENARR.h CTRL.h
 ctrl_map_ini_genarr.f: CTRL_OPTIONS.h CTRL_SIZE.h DXC_MACROS.h DXF_MACROS.h
@@ -4139,21 +4137,21 @@ do_atmospheric_phys.f: XC_MACROS.h YC_MACROS.h
 do_fields_blocking_exchanges.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
 do_fields_blocking_exchanges.f: DYNVARS.h EEPARAMS.h GAD.h PACKAGES_CONFIG.h
 do_fields_blocking_exchanges.f: PARAMS.h SIZE.h /usr/include/stdc-predef.h
-do_oceanic_phys.f: AUTODIFF_MYFIELDS.h AUTODIFF_OPTIONS.h CPP_EEMACROS.h
-do_oceanic_phys.f: CPP_EEOPTIONS.h CPP_OPTIONS.h CTRL_OPTIONS.h DXC_MACROS.h
-do_oceanic_phys.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
-do_oceanic_phys.f: DYF_MACROS.h DYG_MACROS.h DYNVARS.h DYU_MACROS.h EEPARAMS.h
-do_oceanic_phys.f: EOS.h FCORI_MACROS.h FFIELDS.h GMREDI.h GMREDI_OPTIONS.h
-do_oceanic_phys.f: GRID.h GRID_MACROS.h HFACC_MACROS.h HFACS_MACROS.h
-do_oceanic_phys.f: HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-do_oceanic_phys.f: MOM_COMMON_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h
-do_oceanic_phys.f: RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
-do_oceanic_phys.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
-do_oceanic_phys.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
-do_oceanic_phys.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
-do_oceanic_phys.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h SURFACE.h
-do_oceanic_phys.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
-do_oceanic_phys.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
+do_oceanic_phys.f: AUTODIFF_OPTIONS.h CPP_EEMACROS.h CPP_EEOPTIONS.h
+do_oceanic_phys.f: CPP_OPTIONS.h CTRL_OPTIONS.h DXC_MACROS.h DXF_MACROS.h
+do_oceanic_phys.f: DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h DYF_MACROS.h
+do_oceanic_phys.f: DYG_MACROS.h DYNVARS.h DYU_MACROS.h EEPARAMS.h EOS.h
+do_oceanic_phys.f: FCORI_MACROS.h FFIELDS.h GMREDI.h GMREDI_OPTIONS.h GRID.h
+do_oceanic_phys.f: GRID_MACROS.h HFACC_MACROS.h HFACS_MACROS.h HFACW_MACROS.h
+do_oceanic_phys.f: MASKS_MACROS.h MASKW_MACROS.h MOM_COMMON_OPTIONS.h
+do_oceanic_phys.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
+do_oceanic_phys.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
+do_oceanic_phys.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
+do_oceanic_phys.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
+do_oceanic_phys.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
+do_oceanic_phys.f: RECIP_HFACW_MACROS.h SIZE.h SURFACE.h TANPHIATU_MACROS.h
+do_oceanic_phys.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h XC_MACROS.h
+do_oceanic_phys.f: YC_MACROS.h
 do_stagger_fields_exchanges.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
 do_stagger_fields_exchanges.f: DYNVARS.h EEPARAMS.h PARAMS.h SIZE.h
 do_stagger_fields_exchanges.f: /usr/include/stdc-predef.h
@@ -4508,13 +4506,13 @@ forcing_surf_relax.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
 forcing_surf_relax.f: RECIP_HFACW_MACROS.h SIZE.h SURFACE.h TANPHIATU_MACROS.h
 forcing_surf_relax.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h
 forcing_surf_relax.f: XC_MACROS.h YC_MACROS.h
-forward_step.f: AUTODIFF_MYFIELDS.h AUTODIFF_OPTIONS.h cost.h COST_OPTIONS.h
-forward_step.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h CTRL_DUMMY.h
-forward_step.f: CTRL_GENARR.h CTRL.h CTRL_OBCS.h CTRL_OPTIONS.h CTRL_SIZE.h
-forward_step.f: DYNVARS.h EEPARAMS.h EOS.h FFIELDS.h GAD.h GAD_OPTIONS.h
-forward_step.f: GAD_SOM_VARS.h GMREDI.h GMREDI_OPTIONS.h GMREDI_TAVE.h
-forward_step.f: MOM_FLUXFORM.h PACKAGES_CONFIG.h PARAMS.h SIGREG.h SIZE.h
-forward_step.f: SURFACE.h /usr/include/stdc-predef.h
+forward_step.f: AUTODIFF_OPTIONS.h cost.h COST_OPTIONS.h CPP_EEMACROS.h
+forward_step.f: CPP_EEOPTIONS.h CPP_OPTIONS.h CTRL_DUMMY.h CTRL_GENARR.h
+forward_step.f: CTRL.h CTRL_OBCS.h CTRL_OPTIONS.h CTRL_SIZE.h DYNVARS.h
+forward_step.f: EEPARAMS.h EOS.h FFIELDS.h GAD.h GAD_OPTIONS.h GAD_SOM_VARS.h
+forward_step.f: GMREDI.h GMREDI_OPTIONS.h GMREDI_TAVE.h MOM_FLUXFORM.h
+forward_step.f: PACKAGES_CONFIG.h PARAMS.h SIGREG.h SIZE.h SURFACE.h
+forward_step.f: /usr/include/stdc-predef.h
 freesurf_rescale_g.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
 freesurf_rescale_g.f: DXC_MACROS.h DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h
 freesurf_rescale_g.f: DYC_MACROS.h DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h
@@ -5528,10 +5526,11 @@ gmredi_calc_eigs.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
 gmredi_calc_geom.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 gmredi_calc_geom.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 gmredi_calc_geom.f: DYF_MACROS.h DYG_MACROS.h DYNVARS.h DYU_MACROS.h
-gmredi_calc_geom.f: EEPARAMS.h FCORI_MACROS.h GMREDI.h GMREDI_OPTIONS.h GRID.h
-gmredi_calc_geom.f: GRID_MACROS.h HFACC_MACROS.h HFACS_MACROS.h HFACW_MACROS.h
-gmredi_calc_geom.f: MASKS_MACROS.h MASKW_MACROS.h PACKAGES_CONFIG.h PARAMS.h
-gmredi_calc_geom.f: RA_MACROS.h RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
+gmredi_calc_geom.f: EEPARAMS.h FCORI_MACROS.h GAD_OPTIONS.h GMREDI.h
+gmredi_calc_geom.f: GMREDI_OPTIONS.h GRID.h GRID_MACROS.h HFACC_MACROS.h
+gmredi_calc_geom.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h
+gmredi_calc_geom.f: MASKW_MACROS.h PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h
+gmredi_calc_geom.f: RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
 gmredi_calc_geom.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
 gmredi_calc_geom.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
 gmredi_calc_geom.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
@@ -6282,9 +6281,20 @@ lef_zero.f: CPP_EEMACROS.h CPP_EEOPTIONS.h EEPARAMS.h SIZE.h
 lef_zero.f: /usr/include/stdc-predef.h
 load_fields_driver.f: AUTODIFF_OPTIONS.h cost.h COST_OPTIONS.h CPP_EEMACROS.h
 load_fields_driver.f: CPP_EEOPTIONS.h CPP_OPTIONS.h CTRL_DUMMY.h CTRL_GENARR.h
-load_fields_driver.f: CTRL.h CTRL_OPTIONS.h CTRL_SIZE.h EEPARAMS.h EOS.h
-load_fields_driver.f: FFIELDS.h PACKAGES_CONFIG.h PARAMS.h SIZE.h
-load_fields_driver.f: /usr/include/stdc-predef.h
+load_fields_driver.f: CTRL.h CTRL_OPTIONS.h CTRL_SIZE.h DXC_MACROS.h
+load_fields_driver.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
+load_fields_driver.f: DYF_MACROS.h DYG_MACROS.h DYNVARS.h DYU_MACROS.h
+load_fields_driver.f: EEPARAMS.h EOS.h FCORI_MACROS.h FFIELDS.h GRID.h
+load_fields_driver.f: GRID_MACROS.h HFACC_MACROS.h HFACS_MACROS.h
+load_fields_driver.f: HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
+load_fields_driver.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
+load_fields_driver.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
+load_fields_driver.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
+load_fields_driver.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
+load_fields_driver.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
+load_fields_driver.f: RECIP_HFACW_MACROS.h SIZE.h TANPHIATU_MACROS.h
+load_fields_driver.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h
+load_fields_driver.f: XC_MACROS.h YC_MACROS.h
 load_grid_spacing.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 load_grid_spacing.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 load_grid_spacing.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
@@ -6742,12 +6752,13 @@ mom_u_del2u.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_u_del2u.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
 mom_u_del2u.f: FCORI_MACROS.h GRID.h GRID_MACROS.h HFACC_MACROS.h
 mom_u_del2u.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-mom_u_del2u.f: MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h
-mom_u_del2u.f: RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
-mom_u_del2u.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
-mom_u_del2u.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
-mom_u_del2u.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h
-mom_u_del2u.f: SIZE.h SURFACE.h TANPHIATU_MACROS.h TANPHIATV_MACROS.h
+mom_u_del2u.f: MOM_COMMON_OPTIONS.h MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h
+mom_u_del2u.f: PARAMS.h RA_MACROS.h RAS_MACROS.h RAW_MACROS.h
+mom_u_del2u.f: RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h
+mom_u_del2u.f: RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h
+mom_u_del2u.f: RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
+mom_u_del2u.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h SURFACE.h
+mom_u_del2u.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
 mom_u_del2u.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
 mom_u_implicit_r.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 mom_u_implicit_r.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
@@ -6863,27 +6874,29 @@ mom_u_xviscflux.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_u_xviscflux.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
 mom_u_xviscflux.f: FCORI_MACROS.h GRID.h GRID_MACROS.h HFACC_MACROS.h
 mom_u_xviscflux.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-mom_u_xviscflux.f: MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h
-mom_u_xviscflux.f: RA_MACROS.h RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
-mom_u_xviscflux.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
-mom_u_xviscflux.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
-mom_u_xviscflux.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
-mom_u_xviscflux.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h
-mom_u_xviscflux.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
-mom_u_xviscflux.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
+mom_u_xviscflux.f: MOM_COMMON_OPTIONS.h MOM_FLUXFORM_OPTIONS.h
+mom_u_xviscflux.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
+mom_u_xviscflux.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
+mom_u_xviscflux.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
+mom_u_xviscflux.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
+mom_u_xviscflux.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
+mom_u_xviscflux.f: RECIP_HFACW_MACROS.h SIZE.h TANPHIATU_MACROS.h
+mom_u_xviscflux.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h XC_MACROS.h
+mom_u_xviscflux.f: YC_MACROS.h
 mom_u_yviscflux.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 mom_u_yviscflux.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_u_yviscflux.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
 mom_u_yviscflux.f: FCORI_MACROS.h GRID.h GRID_MACROS.h HFACC_MACROS.h
 mom_u_yviscflux.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-mom_u_yviscflux.f: MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h
-mom_u_yviscflux.f: RA_MACROS.h RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
-mom_u_yviscflux.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
-mom_u_yviscflux.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
-mom_u_yviscflux.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
-mom_u_yviscflux.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h
-mom_u_yviscflux.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
-mom_u_yviscflux.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
+mom_u_yviscflux.f: MOM_COMMON_OPTIONS.h MOM_FLUXFORM_OPTIONS.h
+mom_u_yviscflux.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
+mom_u_yviscflux.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
+mom_u_yviscflux.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
+mom_u_yviscflux.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
+mom_u_yviscflux.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
+mom_u_yviscflux.f: RECIP_HFACW_MACROS.h SIZE.h TANPHIATU_MACROS.h
+mom_u_yviscflux.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h XC_MACROS.h
+mom_u_yviscflux.f: YC_MACROS.h
 mom_v_adv_uv.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 mom_v_adv_uv.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_v_adv_uv.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
@@ -6971,12 +6984,13 @@ mom_v_del2v.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_v_del2v.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
 mom_v_del2v.f: FCORI_MACROS.h GRID.h GRID_MACROS.h HFACC_MACROS.h
 mom_v_del2v.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-mom_v_del2v.f: MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h
-mom_v_del2v.f: RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
-mom_v_del2v.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
-mom_v_del2v.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
-mom_v_del2v.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h
-mom_v_del2v.f: SIZE.h SURFACE.h TANPHIATU_MACROS.h TANPHIATV_MACROS.h
+mom_v_del2v.f: MOM_COMMON_OPTIONS.h MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h
+mom_v_del2v.f: PARAMS.h RA_MACROS.h RAS_MACROS.h RAW_MACROS.h
+mom_v_del2v.f: RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h
+mom_v_del2v.f: RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h
+mom_v_del2v.f: RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
+mom_v_del2v.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h SURFACE.h
+mom_v_del2v.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
 mom_v_del2v.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
 mom_vecinv.f: AUTODIFF_OPTIONS.h CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
 mom_vecinv.f: DXC_MACROS.h DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
@@ -7258,27 +7272,29 @@ mom_v_xviscflux.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_v_xviscflux.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
 mom_v_xviscflux.f: FCORI_MACROS.h GRID.h GRID_MACROS.h HFACC_MACROS.h
 mom_v_xviscflux.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-mom_v_xviscflux.f: MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h
-mom_v_xviscflux.f: RA_MACROS.h RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
-mom_v_xviscflux.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
-mom_v_xviscflux.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
-mom_v_xviscflux.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
-mom_v_xviscflux.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h
-mom_v_xviscflux.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
-mom_v_xviscflux.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
+mom_v_xviscflux.f: MOM_COMMON_OPTIONS.h MOM_FLUXFORM_OPTIONS.h
+mom_v_xviscflux.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
+mom_v_xviscflux.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
+mom_v_xviscflux.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
+mom_v_xviscflux.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
+mom_v_xviscflux.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
+mom_v_xviscflux.f: RECIP_HFACW_MACROS.h SIZE.h TANPHIATU_MACROS.h
+mom_v_xviscflux.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h XC_MACROS.h
+mom_v_xviscflux.f: YC_MACROS.h
 mom_v_yviscflux.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 mom_v_yviscflux.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_v_yviscflux.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
 mom_v_yviscflux.f: FCORI_MACROS.h GRID.h GRID_MACROS.h HFACC_MACROS.h
 mom_v_yviscflux.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
-mom_v_yviscflux.f: MOM_FLUXFORM_OPTIONS.h PACKAGES_CONFIG.h PARAMS.h
-mom_v_yviscflux.f: RA_MACROS.h RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
-mom_v_yviscflux.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
-mom_v_yviscflux.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
-mom_v_yviscflux.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h
-mom_v_yviscflux.f: RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h SIZE.h
-mom_v_yviscflux.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
-mom_v_yviscflux.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h
+mom_v_yviscflux.f: MOM_COMMON_OPTIONS.h MOM_FLUXFORM_OPTIONS.h
+mom_v_yviscflux.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
+mom_v_yviscflux.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
+mom_v_yviscflux.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
+mom_v_yviscflux.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
+mom_v_yviscflux.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
+mom_v_yviscflux.f: RECIP_HFACW_MACROS.h SIZE.h TANPHIATU_MACROS.h
+mom_v_yviscflux.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h XC_MACROS.h
+mom_v_yviscflux.f: YC_MACROS.h
 mom_w_coriolis_nh.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h DXC_MACROS.h
 mom_w_coriolis_nh.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
 mom_w_coriolis_nh.f: DYF_MACROS.h DYG_MACROS.h DYU_MACROS.h EEPARAMS.h
@@ -7665,8 +7681,8 @@ scatter_xz.f: CPP_EEMACROS.h CPP_EEOPTIONS.h EEPARAMS.h EESUPPORT.h SIZE.h
 scatter_xz.f: /usr/include/stdc-predef.h
 scatter_yz.f: CPP_EEMACROS.h CPP_EEOPTIONS.h EEPARAMS.h EESUPPORT.h SIZE.h
 scatter_yz.f: /usr/include/stdc-predef.h
-seawater.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
-seawater.f: /usr/include/stdc-predef.h
+seawater.f: AUTODIFF_OPTIONS.h CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
+seawater.f: EOS.h PACKAGES_CONFIG.h SIZE.h /usr/include/stdc-predef.h
 set_defaults.f: CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h EEPARAMS.h
 set_defaults.f: PACKAGES_CONFIG.h PARAMS.h SET_GRID.h SIZE.h
 set_defaults.f: /usr/include/stdc-predef.h
@@ -7788,21 +7804,20 @@ temp_integrate.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
 temp_integrate.f: RECIP_HFACW_MACROS.h RESTART.h SIZE.h TANPHIATU_MACROS.h
 temp_integrate.f: TANPHIATV_MACROS.h /usr/include/stdc-predef.h XC_MACROS.h
 temp_integrate.f: YC_MACROS.h
-the_main_loop.f: AUTODIFF.h AUTODIFF_MYFIELDS.h AUTODIFF_OPTIONS.h
-the_main_loop.f: AUTODIFF_STORE.h cost.h COST_OPTIONS.h CPP_EEMACROS.h
-the_main_loop.f: CPP_EEOPTIONS.h CPP_OPTIONS.h CTRL_DUMMY.h CTRL_GENARR.h
-the_main_loop.f: CTRL.h CTRL_OBCS.h CTRL_OPTIONS.h CTRL_SIZE.h DXC_MACROS.h
-the_main_loop.f: DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h
-the_main_loop.f: DYF_MACROS.h DYG_MACROS.h DYNVARS.h DYU_MACROS.h EEPARAMS.h
-the_main_loop.f: EOS.h FCORI_MACROS.h FFIELDS.h GAD.h GAD_OPTIONS.h
-the_main_loop.f: GAD_SOM_VARS.h GMREDI.h GMREDI_OPTIONS.h GMREDI_TAVE.h GRID.h
-the_main_loop.f: GRID_MACROS.h HFACC_MACROS.h HFACS_MACROS.h HFACW_MACROS.h
-the_main_loop.f: MASKS_MACROS.h MASKW_MACROS.h MOM_FLUXFORM.h
-the_main_loop.f: PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h RAS_MACROS.h
-the_main_loop.f: RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h
-the_main_loop.f: RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h
-the_main_loop.f: RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h
-the_main_loop.f: RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
+the_main_loop.f: AUTODIFF.h AUTODIFF_OPTIONS.h AUTODIFF_STORE.h cost.h
+the_main_loop.f: COST_OPTIONS.h CPP_EEMACROS.h CPP_EEOPTIONS.h CPP_OPTIONS.h
+the_main_loop.f: CTRL_DUMMY.h CTRL_GENARR.h CTRL.h CTRL_OBCS.h CTRL_OPTIONS.h
+the_main_loop.f: CTRL_SIZE.h DXC_MACROS.h DXF_MACROS.h DXG_MACROS.h
+the_main_loop.f: DXV_MACROS.h DYC_MACROS.h DYF_MACROS.h DYG_MACROS.h DYNVARS.h
+the_main_loop.f: DYU_MACROS.h EEPARAMS.h EOS.h FCORI_MACROS.h FFIELDS.h GAD.h
+the_main_loop.f: GAD_OPTIONS.h GAD_SOM_VARS.h GMREDI.h GMREDI_OPTIONS.h
+the_main_loop.f: GMREDI_TAVE.h GRID.h GRID_MACROS.h HFACC_MACROS.h
+the_main_loop.f: HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h
+the_main_loop.f: MOM_FLUXFORM.h PACKAGES_CONFIG.h PARAMS.h RA_MACROS.h
+the_main_loop.f: RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h
+the_main_loop.f: RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h
+the_main_loop.f: RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h
+the_main_loop.f: RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h
 the_main_loop.f: RECIP_HFACW_MACROS.h SIZE.h SURFACE.h tamc.h
 the_main_loop.f: TANPHIATU_MACROS.h TANPHIATV_MACROS.h
 the_main_loop.f: /usr/include/stdc-predef.h XC_MACROS.h YC_MACROS.h

@@ -185,9 +185,6 @@ C     a different file for each tile) and read are thread-safe.
 C
 C--   Flag to turn off the writing of error message to ioUnit zero
 C
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-C
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -3172,6 +3169,13 @@ C
       REAL*8 pload(1-olx:snx+olx, 1-oly:sny+oly, nsx, nsy)
       REAL*8 ploadb(1-olx:snx+olx, 1-oly:sny+oly, nsx, nsy)
       REAL*8 siceload(1-olx:snx+olx, 1-oly:sny+oly, nsx, nsy)
+C
+C     gcmSST :: model in-situ Sea Surface Temperature (SST); corresponds to
+C               surface-level model variable "theta", except if using TEOS-10 ;
+C               in that case a conversion from model Conservative Temperature
+C               "theta" is applied. Note: not defined under an ice-shelf
+      COMMON /ffields_insitu_temp/ gcmsst
+      REAL*8 gcmsst(1-olx:snx+olx, 1-oly:sny+oly, nsx, nsy)
 C
 C
 C- jmc: commented out until corresponding (ghost-like) code apparition

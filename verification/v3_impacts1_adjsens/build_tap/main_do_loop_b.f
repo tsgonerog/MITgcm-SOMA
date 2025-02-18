@@ -197,9 +197,6 @@ C     a different file for each tile) and read are thread-safe.
 C
 C--   Flag to turn off the writing of error message to ioUnit zero
 C
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-C
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -411,17 +408,15 @@ C
 C
 C     Package-specific Options & Macros go here
 C
-C This flag selects the form of COSINE(lat) scaling of bi-harmonic term.
-C *only for use on a lat-lon grid*
-C Setting this flag here only affects the bi-harmonic tracer terms; to
-C use COSINEMETH_III in the momentum equations set it CPP_OPTIONS.h
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic diffusivity -- only on lat-lon grid.
+C Setting this flag here only affects tracer diffusivity; to use it
+C in the momentum equations it needs to be set in MOM_COMMON_OPTIONS.h
 C
-C This selects isotropic scaling of harmonic and bi-harmonic term when
-C using the COSINE(lat) scaling.
-C Setting this flag here only affects the tracer diffusion terms; to
-C use ISOTROPIC_COS_SCALING of the horizontal viscosity terms in the
-C momentum equations set it CPP_OPTIONS.h; the following line
-C even overrides setting the flag in CPP_OPTIONS.h
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C diffusivity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects tracer diffusivity; to use it
+C in the momentum equations it needs to be set in MOM_COMMON_OPTIONS.h
 C
 C As of checkpoint41, the inclusion of multi-dimensional advection
 C introduces excessive recomputation/storage for the adjoint.
@@ -2860,6 +2855,13 @@ C
       REAL*8 ploadb(1-olx:snx+olx, 1-oly:sny+oly, nsx, nsy)
       REAL*8 siceload(1-olx:snx+olx, 1-oly:sny+oly, nsx, nsy)
 C
+C     gcmSST :: model in-situ Sea Surface Temperature (SST); corresponds to
+C               surface-level model variable "theta", except if using TEOS-10 ;
+C               in that case a conversion from model Conservative Temperature
+C               "theta" is applied. Note: not defined under an ice-shelf
+      COMMON /ffields_insitu_temp/ gcmsst
+      REAL*8 gcmsst(1-olx:snx+olx, 1-oly:sny+oly, nsx, nsy)
+C
 C
 C- jmc: commented out until corresponding (ghost-like) code apparition
 C     dQdT  :: Thermal relaxation coefficient in W/m^2/degrees
@@ -4354,6 +4356,7 @@ C
       CALL PUSHREAL8ARRAY(tauy0, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL PUSHREAL8ARRAY(taux0, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL PUSHINTEGER4ARRAY(loadedrec, nsx*nsy)
+      CALL PUSHREAL8ARRAY(gcmsst, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL PUSHREAL8ARRAY(pload, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL PUSHREAL8ARRAY(sss, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL PUSHREAL8ARRAY(sst, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
@@ -4443,6 +4446,7 @@ C
       CALL POPREAL8ARRAY(sst, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL POPREAL8ARRAY(sss, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL POPREAL8ARRAY(pload, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
+      CALL POPREAL8ARRAY(gcmsst, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL POPINTEGER4ARRAY(loadedrec, nsx*nsy)
       CALL POPREAL8ARRAY(taux0, (snx+2*olx)*(sny+2*oly)*nsx*nsy)
       CALL POPREAL8ARRAY(tauy0, (snx+2*olx)*(sny+2*oly)*nsx*nsy)

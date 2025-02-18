@@ -179,9 +179,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -2291,7 +2288,7 @@ c     == local variables ==
       integer nwetsouth
       integer nwetwest
 
-      character*(max_len_mbuf) msgbuf
+      character*(MAX_LEN_MBUF) msgbuf
 
       INTEGER iarr, jarr, iw
 
@@ -2359,7 +2356,7 @@ c         write(msgbuf,'(a,i5.4,i5.4,i7.6,i7.6,i7.6)')
       enddo
 
       do ivar = 1, maxcvars
-C     only print active variables for which ncvarindex has be set
+C     only print active variables for which ncvarindex has been set
 C     (default = -1)
        if ( ncvarindex(ivar) .GE. 0 ) then
 

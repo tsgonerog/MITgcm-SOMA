@@ -179,9 +179,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -379,6 +376,16 @@ C Use this file for selecting CPP options within the mom_common package
 
 
 C     Package-specific options go here
+
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic viscosity -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C viscosity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
 
 C allow LeithQG coefficient to be calculated
 
@@ -1904,9 +1911,122 @@ C     end nonlinear equation of state
       Real*8 eosMDJWFnum(0:11), eosMDJWFden(0:12)
       COMMON /PARM_EOS_MDJWF/
      &     eosMDJWFnum, eosMDJWFden
+
+C     TEOS10 coefficients
       Real*8 teos(48)
+
+C     Parameters in the temperature conversion code for TEOS10
+C     The TEOS 10 conversion factor to go from reference salinity to
+C     practical salinity (nondim)
+      Real*8 Sprac_Sref
+C     The inverse of a plausible range of oceanic salinities (kg g-1)
+      Real*8 I_S0
+C     The inverse of a plausible range of oceanic temperatures (degC-1)
+      Real*8 I_Ts
+C     The inverse of the "specific heat" for use
+C     with Conservative Temperature, as defined with TEOS10 (degC kg J-1)
+      Real*8 I_cp0
+
+C     The following are coefficients of contributions to conservative
+C     temperature as a function of the square root of normalized
+C     absolute salinity with an offset (zS) and potential temperature
+C     (T) with a contribution Hab * zS**a * T**b.  The numbers here are
+C     copied directly from the corresponding gsw module, but the
+C     expressions here do not use the same nondimensionalization for
+C     pressure or temperature as they do.
+
+C     Tp to Tc fit constant (degC)
+      Real*8 H00
+C     Tp to Tc fit T coef. (nondim)
+      Real*8 H01
+C     Tp to Tc fit T**2 coef. (degC-1)
+      Real*8 H02
+C     Tp to Tc fit T**3 coef. (degC-2)
+      Real*8 H03
+C     Tp to Tc fit T**4 coef. (degC-3)
+      Real*8 H04
+C     Tp to Tc fit T**5 coef. (degC-4)
+      Real*8 H05
+C     Tp to Tc fit T**6 coef. (degC-5)
+      Real*8 H06
+C     Tp to Tc fit T**7 coef. (degC-6)
+      Real*8 H07
+C     Tp to Tc fit zS**2 coef. (degC)
+      Real*8 H20
+C     Tp to Tc fit zS**2 * T coef. (nondim)
+      Real*8 H21
+C     Tp to Tc fit zS**2 * T**2 coef. (degC-1)
+      Real*8 H22
+C     Tp to Tc fit zS**2 * T**3 coef. (degC-2)
+      Real*8 H23
+C     Tp to Tc fit zS**2 * T**4 coef. (degC-3)
+      Real*8 H24
+C     Tp to Tc fit zS**2 * T**5 coef. (degC-4)
+      Real*8 H25
+C     Tp to Tc fit zS**2 * T**6 coef. (degC-5)
+      Real*8 H26
+C     Tp to Tc fit zS**3 coef. (degC)
+      Real*8 H30
+C     Tp to Tc fit zS** 3* T coef. (nondim)
+      Real*8 H31
+C     Tp to Tc fit zS**3 * T**2 coef. (degC-1)
+      Real*8 H32
+C     Tp to Tc fit zS**3 * T**3 coef. (degC-2)
+      Real*8 H33
+C     Tp to Tc fit zS**3 * T**4 coef. (degC-3)
+      Real*8 H34
+C     Tp to Tc fit zS**4 coef. (degC)
+      Real*8 H40
+C     Tp to Tc fit zS**4 * T coef. (nondim)
+      Real*8 H41
+C     Tp to Tc fit zS**4 * T**2 coef. (degC-1)
+      Real*8 H42
+C     Tp to Tc fit zS**4 * T**3 coef. (degC-2)
+      Real*8 H43
+C     Tp to Tc fit zS**4 * T**4 coef. (degC-3)
+      Real*8 H44
+C     Tp to Tc fit zS**4 * T**5 coef. (degC-4)
+      Real*8 H45
+C     Tp to Tc fit zS**5 coef. (degC)
+      Real*8 H50
+C     Tp to Tc fit zS**6 coef. (degC)
+      Real*8 H60
+C     Tp to Tc fit zS**7 coef. (degC)
+      Real*8 H70
+
+C     The following are coefficients in the nominator (TPNxx) or
+C     denominator (TPDxx) of a simple rational expression that
+C     approximately converts conservative temperature to potential
+C     temperature.
+C     Simple fit numerator constant (degC)
+      Real*8 TPN00
+C     Simple fit numerator Sa coef. (degC ppt-1)
+      Real*8 TPN10
+C     Simple fit numerator Sa**2 coef. (degC ppt-2)
+      Real*8 TPN20
+C     Simple fit numerator Tc coef. (nondim)
+      Real*8 TPN01
+C     Simple fit numerator Sa * Tc coef. (ppt-1)
+      Real*8 TPN11
+C     Simple fit numerator Tc**2 coef. (degC-1)
+      Real*8 TPN02
+C     Simple fit denominator Sa coef. (ppt-1)
+      Real*8 TPD10
+C     Simple fit denominator Tc coef. (degC-1)
+      Real*8 TPD01
+C     Simple fit denominator Tc**2 coef. (degC-2)
+      Real*8 TPD02
+
       COMMON /PARM_TEOS10/
-     &     teos
+     &     teos,
+     &     Sprac_Sref, I_S0, I_Ts, I_cp0,
+     &     H00, H01, H02, H03, H04, H05, H06, H07,
+     &     H20, H21, H22, H23, H24, H25, H26,
+     &     H30, H31, H32, H33, H34,
+     &     H40, H41, H42, H43, H44, H45,
+     &     H50, H60, H70,
+     &     TPN00, TPN10, TPN20,
+     &     TPN01, TPN11, TPN02, TPD10, TPD01, TPD02
 C- Common file for length scales
 
 

@@ -181,9 +181,6 @@ C     a different file for each tile) and read are thread-safe.
 C
 C--   Flag to turn off the writing of error message to ioUnit zero
 C
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-C
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms

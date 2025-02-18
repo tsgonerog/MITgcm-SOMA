@@ -173,9 +173,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -1926,6 +1923,13 @@ C     EfluxP - p-component of Eliassen-Palm flux vector
       Real*8  pLoad    (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       Real*8  sIceLoad (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
 
+C     gcmSST :: model in-situ Sea Surface Temperature (SST); corresponds to
+C               surface-level model variable "theta", except if using TEOS-10 ;
+C               in that case a conversion from model Conservative Temperature
+C               "theta" is applied. Note: not defined under an ice-shelf
+      COMMON /FFIELDS_INSITU_TEMP/ gcmSST
+      Real*8  gcmSST(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
 
 C- jmc: commented out until corresponding (ghost-like) code apparition
 C     dQdT  :: Thermal relaxation coefficient in W/m^2/degrees
@@ -2059,6 +2063,7 @@ C-    2-D forcing fields
           phiTide2d       (i,j,bi,bj) = 0.D0
           pLoad           (i,j,bi,bj) = 0.D0
           sIceLoad        (i,j,bi,bj) = 0.D0
+          gcmSST          (i,j,bi,bj) = 0.D0
 C-    Time reccord loaded from file:
           taux0           (i,j,bi,bj) = 0.D0
           taux1           (i,j,bi,bj) = 0.D0

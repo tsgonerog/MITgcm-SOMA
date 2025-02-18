@@ -179,9 +179,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -1969,6 +1966,1205 @@ C-- Logical flags for selecting packages
      &        useMYPACKAGE
 
 C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
+C
+CBOP
+C    !ROUTINE: GRID.h
+C    !INTERFACE:
+C    include GRID.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | GRID.h
+C     | o Header file defining model grid.
+C     *==========================================================*
+C     | Model grid is defined for each process by reference to
+C     | the arrays set here.
+C     | Notes
+C     | =====
+C     | The standard MITgcm convention of westmost, southern most
+C     | and upper most having the (1,1,1) index is used here.
+C     | i.e.
+C     |----------------------------------------------------------
+C     | (1)  Plan view schematic of model grid (top layer i.e. )
+C     |      ================================= ( ocean surface )
+C     |                                        ( or top of     )
+C     |                                        ( atmosphere    )
+C     |      This diagram shows the location of the model
+C     |      prognostic variables on the model grid. The "T"
+C     |      location is used for all tracers. The figure also
+C     |      shows the southern most, western most indexing
+C     |      convention that is used for all model variables.
+C     |
+C     |
+C     |             V(i=1,                     V(i=Nx,
+C     |               j=Ny+1,                    j=Ny+1,
+C     |               k=1)                       k=1)
+C     |                /|\                       /|\  "PWX"
+C     |       |---------|------------------etc..  |---- *---
+C     |       |                     |                   *  |
+C     |"PWY"*******************************etc..  **********"PWY"
+C     |       |                     |                   *  |
+C     |       |                     |                   *  |
+C     |       |                     |                   *  |
+C     |U(i=1, ==>       x           |             x     *==>U
+C     |  j=Ny,|      T(i=1,         |          T(i=Nx,  *(i=Nx+1,
+C     |  k=1) |        j=Ny,        |            j=Ny,  *  |j=Ny,
+C     |       |        k=1)         |            k=1)   *  |k=1)
+C     |
+C     |       .                     .                      .
+C     |       .                     .                      .
+C     |       .                     .                      .
+C     |       e                     e                   *  e
+C     |       t                     t                   *  t
+C     |       c                     c                   *  c
+C     |       |                     |                   *  |
+C     |       |                     |                   *  |
+C     |U(i=1, ==>       x           |             x     *  |
+C     |  j=2, |      T(i=1,         |          T(i=Nx,  *  |
+C     |  k=1) |        j=2,         |            j=2,   *  |
+C     |       |        k=1)         |            k=1)   *  |
+C     |       |                     |                   *  |
+C     |       |        /|\          |            /|\    *  |
+C     |      -----------|------------------etc..  |-----*---
+C     |       |       V(i=1,        |           V(i=Nx, *  |
+C     |       |         j=2,        |             j=2,  *  |
+C     |       |         k=1)        |             k=1)  *  |
+C     |       |                     |                   *  |
+C     |U(i=1, ==>       x         ==>U(i=2,       x     *==>U
+C     |  j=1, |      T(i=1,         |  j=1,    T(i=Nx,  *(i=Nx+1,
+C     |  k=1) |        j=1,         |  k=1)      j=1,   *  |j=1,
+C     |       |        k=1)         |            k=1)   *  |k=1)
+C     |       |                     |                   *  |
+C     |       |        /|\          |            /|\    *  |
+C     |"SB"++>|---------|------------------etc..  |-----*---
+C     |      /+\      V(i=1,                    V(i=Nx, *
+C     |       +         j=1,                      j=1,  *
+C     |       +         k=1)                      k=1)  *
+C     |     "WB"                                      "PWX"
+C     |
+C     |   N, y increasing northwards
+C     |  /|\ j increasing northwards
+C     |   |
+C     |   |
+C     |   ======>E, x increasing eastwards
+C     |             i increasing eastwards
+C     |
+C     |    i: East-west index
+C     |    j: North-south index
+C     |    k: up-down index
+C     |    U: x-velocity (m/s)
+C     |    V: y-velocity (m/s)
+C     |    T: potential temperature (oC)
+C     | "SB": Southern boundary
+C     | "WB": Western boundary
+C     |"PWX": Periodic wrap around in X.
+C     |"PWY": Periodic wrap around in Y.
+C     |----------------------------------------------------------
+C     | (2) South elevation schematic of model grid
+C     |     =======================================
+C     |     This diagram shows the location of the model
+C     |     prognostic variables on the model grid. The "T"
+C     |     location is used for all tracers. The figure also
+C     |     shows the upper most, western most indexing
+C     |     convention that is used for all model variables.
+C     |
+C     |      "WB"
+C     |       +
+C     |       +
+C     |      \+/       /|\                       /|\       .
+C     |"UB"++>|-------- | -----------------etc..  | ----*---
+C     |       |    rVel(i=1,        |        rVel(i=Nx, *  |
+C     |       |         j=1,        |             j=1,  *  |
+C     |       |         k=1)        |             k=1)  *  |
+C     |       |                     |                   *  |
+C     |U(i=1, ==>       x         ==>U(i=2,       x     *==>U
+C     |  j=1, |      T(i=1,         |  j=1,    T(i=Nx,  *(i=Nx+1,
+C     |  k=1) |        j=1,         |  k=1)      j=1,   *  |j=1,
+C     |       |        k=1)         |            k=1)   *  |k=1)
+C     |       |                     |                   *  |
+C     |       |        /|\          |            /|\    *  |
+C     |       |-------- | -----------------etc..  | ----*---
+C     |       |    rVel(i=1,        |        rVel(i=Nx, *  |
+C     |       |         j=1,        |             j=1,  *  |
+C     |       |         k=2)        |             k=2)  *  |
+C     |
+C     |       .                     .                      .
+C     |       .                     .                      .
+C     |       .                     .                      .
+C     |       e                     e                   *  e
+C     |       t                     t                   *  t
+C     |       c                     c                   *  c
+C     |       |                     |                   *  |
+C     |       |                     |                   *  |
+C     |       |                     |                   *  |
+C     |       |                     |                   *  |
+C     |       |        /|\          |            /|\    *  |
+C     |       |-------- | -----------------etc..  | ----*---
+C     |       |    rVel(i=1,        |        rVel(i=Nx, *  |
+C     |       |         j=1,        |             j=1,  *  |
+C     |       |         k=Nr)       |             k=Nr) *  |
+C     |U(i=1, ==>       x         ==>U(i=2,       x     *==>U
+C     |  j=1, |      T(i=1,         |  j=1,    T(i=Nx,  *(i=Nx+1,
+C     |  k=Nr)|        j=1,         |  k=Nr)     j=1,   *  |j=1,
+C     |       |        k=Nr)        |            k=Nr)  *  |k=Nr)
+C     |       |                     |                   *  |
+C     |"LB"++>==============================================
+C     |                                               "PWX"
+C     |
+C     | Up   increasing upwards.
+C     |/|\                                                       .
+C     | |
+C     | |
+C     | =====> E  i increasing eastwards
+C     | |         x increasing eastwards
+C     | |
+C     |\|/
+C     | Down,k increasing downwards.
+C     |
+C     | Note: r => height (m) => r increases upwards
+C     |       r => pressure (Pa) => r increases downwards
+C     |
+C     |
+C     |    i: East-west index
+C     |    j: North-south index
+C     |    k: up-down index
+C     |    U: x-velocity (m/s)
+C     | rVel: z-velocity ( units of r )
+C     |       The vertical velocity variable rVel is in units of
+C     |       "r" the vertical coordinate. r in m will give
+C     |       rVel m/s. r in Pa will give rVel Pa/s.
+C     |    T: potential temperature (oC)
+C     | "UB": Upper boundary.
+C     | "LB": Lower boundary (always solid - therefore om|w == 0)
+C     | "WB": Western boundary
+C     |"PWX": Periodic wrap around in X.
+C     |----------------------------------------------------------
+C     | (3) Views showing nomenclature and indexing
+C     |     for grid descriptor variables.
+C     |
+C     |      Fig 3a. shows the orientation, indexing and
+C     |      notation for the grid spacing terms used internally
+C     |      for the evaluation of gradient and averaging terms.
+C     |      These varaibles are set based on the model input
+C     |      parameters which define the model grid in terms of
+C     |      spacing in X, Y and Z.
+C     |
+C     |      Fig 3b. shows the orientation, indexing and
+C     |      notation for the variables that are used to define
+C     |      the model grid. These varaibles are set directly
+C     |      from the model input.
+C     |
+C     | Figure 3a
+C     | =========
+C     |       |------------------------------------
+C     |       |                       |
+C     |"PWY"********************************* etc...
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |
+C     |       .                       .
+C     |       .                       .
+C     |       .                       .
+C     |       e                       e
+C     |       t                       t
+C     |       c                       c
+C     |       |-----------v-----------|-----------v----------|-
+C     |       |                       |                      |
+C     |       |                       |                      |
+C     |       |                       |                      |
+C     |       |                       |                      |
+C     |       |                       |                      |
+C     |       u<--dxF(i=1,j=2,k=1)--->u           t          |
+C     |       |/|\       /|\          |                      |
+C     |       | |         |           |                      |
+C     |       | |         |           |                      |
+C     |       | |         |           |                      |
+C     |       |dyU(i=1,  dyC(i=1,     |                      |
+C     | ---  ---|--j=2,---|--j=2,-----------------v----------|-
+C     | /|\   | |  k=1)   |  k=1)     |          /|\         |
+C     |  |    | |         |           |          dyF(i=2,    |
+C     |  |    | |         |           |           |  j=1,    |
+C     |dyG(   |\|/       \|/          |           |  k=1)    |
+C     |   i=1,u---        t<---dxC(i=2,j=1,k=1)-->t          |
+C     |   j=1,|                       |           |          |
+C     |   k=1)|                       |           |          |
+C     |  |    |                       |           |          |
+C     |  |    |                       |           |          |
+C     | \|/   |           |<---dxV(i=2,j=1,k=1)--\|/         |
+C     |"SB"++>|___________v___________|___________v__________|_
+C     |       <--dxG(i=1,j=1,k=1)----->
+C     |      /+\                                              .
+C     |       +
+C     |       +
+C     |     "WB"
+C     |
+C     |   N, y increasing northwards
+C     |  /|\ j increasing northwards
+C     |   |
+C     |   |
+C     |   ======>E, x increasing eastwards
+C     |             i increasing eastwards
+C     |
+C     |    i: East-west index
+C     |    j: North-south index
+C     |    k: up-down index
+C     |    u: x-velocity point
+C     |    V: y-velocity point
+C     |    t: tracer point
+C     | "SB": Southern boundary
+C     | "WB": Western boundary
+C     |"PWX": Periodic wrap around in X.
+C     |"PWY": Periodic wrap around in Y.
+C     |
+C     | Figure 3b
+C     | =========
+C     |
+C     |       .                       .
+C     |       .                       .
+C     |       .                       .
+C     |       e                       e
+C     |       t                       t
+C     |       c                       c
+C     |       |-----------v-----------|-----------v--etc...
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       u<--delX(i=1)---------->u           t
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |                       |
+C     |       |-----------v-----------------------v--etc...
+C     |       |          /|\          |
+C     |       |           |           |
+C     |       |           |           |
+C     |       |           |           |
+C     |       u        delY(j=1)      |           t
+C     |       |           |           |
+C     |       |           |           |
+C     |       |           |           |
+C     |       |           |           |
+C     |       |          \|/          |
+C     |"SB"++>|___________v___________|___________v__etc...
+C     |      /+\                                                 .
+C     |       +
+C     |       +
+C     |     "WB"
+C     |
+C     *==========================================================*
+C     \ev
+CEOP
+
+C     Macros that override/modify standard definitions
+C
+CBOP
+C    !ROUTINE: GRID_MACROS.h
+C    !INTERFACE:
+C    include GRID_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | GRID_MACROS.h
+C     *==========================================================*
+C     | These macros are used to substitute definitions for
+C     | GRID.h variables for particular configurations.
+C     | In setting these variables the following convention
+C     | applies.
+C     | undef  phi_CONST   - Indicates the variable phi is fixed
+C     |                      in X, Y and Z.
+C     | undef  phi_FX      - Indicates the variable phi only
+C     |                      varies in X (i.e.not in X or Z).
+C     | undef  phi_FY      - Indicates the variable phi only
+C     |                      varies in Y (i.e.not in X or Z).
+C     | undef  phi_FXY     - Indicates the variable phi only
+C     |                      varies in X and Y ( i.e. not Z).
+C     *==========================================================*
+C     \ev
+CEOP
+
+C
+CBOP
+C    !ROUTINE: DXC_MACROS.h
+C    !INTERFACE:
+C    include DXC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DXC_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: DXF_MACROS.h
+C    !INTERFACE:
+C    include DXF_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DXF_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: DXG_MACROS.h
+C    !INTERFACE:
+C    include DXG_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DXG_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: DXV_MACROS.h
+C    !INTERFACE:
+C    include DXV_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DXV_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: DYC_MACROS.h
+C    !INTERFACE:
+C    include DYC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DYC_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: DYF_MACROS.h
+C    !INTERFACE:
+C    include DYF_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DYF_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: DYG_MACROS.h
+C    !INTERFACE:
+C    include DYG_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DYG_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: DYU_MACROS.h
+C    !INTERFACE:
+C    include DYU_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | DYU_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: HFACC_MACROS.h
+C    !INTERFACE:
+C    include HFACC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | HFACC_MACROS.h                                            
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: HFACS_MACROS.h
+C    !INTERFACE:
+C    include HFACS_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | HFACS_MACROS.h                                            
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: HFACW_MACROS.h
+C    !INTERFACE:
+C    include HFACW_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | HFACW_MACROS.h                                            
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DXC_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DXC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DXC_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DXF_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DXF_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DXF_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DXG_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DXG_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DXG_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DXV_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DXV_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DXV_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DYC_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DYC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DYC_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DYF_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DYF_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DYF_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DYG_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DYG_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DYG_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_DYU_MACROS.h
+C    !INTERFACE:
+C    include RECIP_DYU_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_DYU_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_HFACC_MACROS.h
+C    !INTERFACE:
+C    include RECIP_HFACC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_HFACC_MACROS.h                                      
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_HFACS_MACROS.h
+C    !INTERFACE:
+C    include RECIP_HFACS_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_HFACS_MACROS.h                                      
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RECIP_HFACW_MACROS.h
+C    !INTERFACE:
+C    include RECIP_HFACW_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RECIP_HFACW_MACROS.h                                      
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: XC_MACROS.h
+C    !INTERFACE:
+C    include XC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | XC_MACROS.h                                               
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: YC_MACROS.h
+C    !INTERFACE:
+C    include YC_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | YC_MACROS.h                                               
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RA_MACROS.h
+C    !INTERFACE:
+C    include RA_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RA_MACROS.h                                               
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RAW_MACROS.h
+C    !INTERFACE:
+C    include RAW_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RAW_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+C
+CBOP
+C    !ROUTINE: RAS_MACROS.h
+C    !INTERFACE:
+C    include RAS_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | RAS_MACROS.h                                              
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: MASKW_MACROS.h
+C    !INTERFACE:
+C    include MASKW_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | MASKW_MACROS.h                                            
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: MASKS_MACROS.h
+C    !INTERFACE:
+C    include MASKS_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | MASKS_MACROS.h                                            
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: TANPHIATU_MACROS.h
+C    !INTERFACE:
+C    include TANPHIATU_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | TANPHIATU_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: TANPHIATV_MACROS.h
+C    !INTERFACE:
+C    include TANPHIATV_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | TANPHIATV_MACROS.h                                        
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C
+CBOP
+C    !ROUTINE: FCORI_MACROS.h
+C    !INTERFACE:
+C    include FCORI_MACROS.h
+C    !DESCRIPTION: \bv
+C     *==========================================================*
+C     | FCORI_MACROS.h                                            
+C     *==========================================================*
+C     | These macros are used to reduce memory requirement and/or 
+C     | memory references when variables are fixed along a given  
+C     | axis or axes.                                             
+C     *==========================================================*
+C     \ev
+CEOP
+
+
+
+
+
+C--   COMMON /GRID_RL/ RL valued grid defining variables.
+C     deepFacC  :: deep-model grid factor (fct of vertical only) for dx,dy
+C     deepFacF     at level-center (deepFacC)  and level interface (deepFacF)
+C     deepFac2C :: deep-model grid factor (fct of vertical only) for area dx*dy
+C     deepFac2F    at level-center (deepFac2C) and level interface (deepFac2F)
+C     gravitySign :: indicates the direction of gravity relative to R direction
+C                   (= -1 for R=Z (Z increases upward, -gravity direction  )
+C                   (= +1 for R=P (P increases downward, +gravity direction)
+C     rkSign     :: Vertical coordinate to vertical index orientation.
+C                   ( +1 same orientation, -1 opposite orientation )
+C     globalArea :: Domain Integrated horizontal Area [m2]
+      COMMON /GRID_RL/
+     &  cosFacU, cosFacV, sqCosFacU, sqCosFacV,
+     &  deepFacC, deepFac2C, recip_deepFacC, recip_deepFac2C,
+     &  deepFacF, deepFac2F, recip_deepFacF, recip_deepFac2F,
+     &  gravitySign, rkSign, globalArea
+      Real*8 cosFacU        (1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 cosFacV        (1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 sqCosFacU      (1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 sqCosFacV      (1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 deepFacC       (Nr)
+      Real*8 deepFac2C      (Nr)
+      Real*8 deepFacF       (Nr+1)
+      Real*8 deepFac2F      (Nr+1)
+      Real*8 recip_deepFacC (Nr)
+      Real*8 recip_deepFac2C(Nr)
+      Real*8 recip_deepFacF (Nr+1)
+      Real*8 recip_deepFac2F(Nr+1)
+      Real*8 gravitySign
+      Real*8 rkSign
+      Real*8 globalArea
+
+C--   COMMON /GRID_RS/ RS valued grid defining variables.
+C     dxC     :: Cell center separation in X across western cell wall (m)
+C     dxG     :: Cell face separation in X along southern cell wall (m)
+C     dxF     :: Cell face separation in X thru cell center (m)
+C     dxV     :: V-point separation in X across south-west corner of cell (m)
+C     dyC     :: Cell center separation in Y across southern cell wall (m)
+C     dyG     :: Cell face separation in Y along western cell wall (m)
+C     dyF     :: Cell face separation in Y thru cell center (m)
+C     dyU     :: U-point separation in Y across south-west corner of cell (m)
+C     drC     :: Cell center separation along Z axis ( units of r ).
+C     drF     :: Cell face separation along Z axis ( units of r ).
+C     R_low   :: base of fluid in r_unit (Depth(m) / Pressure(Pa) at top Atmos.)
+C     rLowW   :: base of fluid column in r_unit at Western  edge location.
+C     rLowS   :: base of fluid column in r_unit at Southern edge location.
+C     Ro_surf :: surface reference (at rest) position, r_unit.
+C     rSurfW  :: surface reference position at Western  edge location [r_unit].
+C     rSurfS  :: surface reference position at Southern edge location [r_unit].
+C     hFac    :: Fraction of cell in vertical which is open i.e how
+C              "lopped" a cell is (dimensionless scale factor).
+C              Note: The code needs terms like MIN(hFac,hFac(I-1))
+C                    On some platforms it may be better to precompute
+C                    hFacW, hFacS, ... here than do MIN on the fly.
+C     maskInC :: Cell Center 2-D Interior mask (i.e., zero beyond OB)
+C     maskInW :: West  face 2-D Interior mask (i.e., zero on and beyond OB)
+C     maskInS :: South face 2-D Interior mask (i.e., zero on and beyond OB)
+C     maskC   :: cell Center land mask
+C     maskW   :: West face land mask
+C     maskS   :: South face land mask
+C     recip_dxC   :: Reciprocal of dxC
+C     recip_dxG   :: Reciprocal of dxG
+C     recip_dxF   :: Reciprocal of dxF
+C     recip_dxV   :: Reciprocal of dxV
+C     recip_dyC   :: Reciprocal of dxC
+C     recip_dyG   :: Reciprocal of dyG
+C     recip_dyF   :: Reciprocal of dyF
+C     recip_dyU   :: Reciprocal of dyU
+C     recip_drC   :: Reciprocal of drC
+C     recip_drF   :: Reciprocal of drF
+C     recip_Rcol  :: Inverse of cell center column thickness (1/r_unit)
+C     recip_hFacC :: Inverse of cell open-depth f[X,Y,Z] ( dimensionless ).
+C     recip_hFacW    rhFacC center, rhFacW west, rhFacS south.
+C     recip_hFacS   Note: This is precomputed here because it involves division.
+C     xC     :: X-coordinate of cell center f[X,Y]. The units of xc, yc
+C               depend on the grid. They are not used in differencing or
+C               averaging but are just a convient quantity for I/O,
+C               diagnostics etc.. As such xc is in m for cartesian
+C               coordinates but degrees for spherical polar.
+C     yC     :: Y-coordinate of center of cell f[X,Y].
+C     yG     :: Y-coordinate of corner of cell (c-grid vorticity point) f[X,Y].
+C     rA     :: R-face are f[X,Y] ( m^2 ).
+C               Note: In a cartesian framework rA is simply dx*dy,
+C                   however we use rA to allow for non-globally
+C                   orthogonal coordinate frames (with appropriate
+C                   metric terms).
+C     rC     :: R-coordinate of center of cell f[Z] (units of r).
+C     rF     :: R-coordinate of face of cell f[Z] (units of r).
+C - *HybSigm* - :: Hybrid-Sigma vert. Coord coefficients
+C     aHybSigmF    at level-interface (*HybSigmF) and level-center (*HybSigmC)
+C     aHybSigmC    aHybSigm* = constant r part, bHybSigm* = sigma part, such as
+C     bHybSigmF    r(ij,k,t) = rLow(ij) + aHybSigm(k)*[rF(1)-rF(Nr+1)]
+C     bHybSigmC              + bHybSigm(k)*[eta(ij,t)+Ro_surf(ij) - rLow(ij)]
+C     dAHybSigF :: vertical increment of Hybrid-Sigma coeff.: constant r part,
+C     dAHybSigC    between interface (dAHybSigF) and between center (dAHybSigC)
+C     dBHybSigF :: vertical increment of Hybrid-Sigma coefficient: sigma part,
+C     dBHybSigC    between interface (dBHybSigF) and between center (dBHybSigC)
+C     tanPhiAtU :: tan of the latitude at U point. Used for spherical polar
+C                  metric term in U equation.
+C     tanPhiAtV :: tan of the latitude at V point. Used for spherical polar
+C                  metric term in V equation.
+C     angleCosC :: cosine of grid orientation angle relative to Geographic
+C direction at cell center: alpha=(Eastward_dir,grid_uVel_dir)=(North_d,vVel_d)
+C     angleSinC :: sine   of grid orientation angle relative to Geographic
+C direction at cell center: alpha=(Eastward_dir,grid_uVel_dir)=(North_d,vVel_d)
+C     u2zonDir  :: cosine of grid orientation angle at U point location
+C     v2zonDir  :: minus sine of  orientation angle at V point location
+C     fCori     :: Coriolis parameter at grid Center point
+C     fCoriG    :: Coriolis parameter at grid Corner point
+C     fCoriCos  :: Coriolis Cos(phi) parameter at grid Center point (for NH)
+
+      COMMON /GRID_RS/
+     &  dxC,dxF,dxG,dxV,dyC,dyF,dyG,dyU,
+     &  rLowW, rLowS,
+     &  Ro_surf, rSurfW, rSurfS,
+     &  recip_dxC,recip_dxF,recip_dxG,recip_dxV,
+     &  recip_dyC,recip_dyF,recip_dyG,recip_dyU,
+     &  xC,yC,rA,rAw,rAs,rAz,xG,yG,
+     &  maskInC, maskInW, maskInS,
+     &  maskC, maskW, maskS,
+     &  recip_rA,recip_rAw,recip_rAs,recip_rAz,
+     &  drC, drF, recip_drC, recip_drF, rC, rF,
+     &  aHybSigmF, bHybSigmF, aHybSigmC, bHybSigmC,
+     &  dAHybSigF, dBHybSigF, dBHybSigC, dAHybSigC,
+     &  tanPhiAtU, tanPhiAtV,
+     &  angleCosC, angleSinC, u2zonDir, v2zonDir,
+     &  fCori, fCoriG, fCoriCos
+      Real*8 dxC            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 dxF            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 dxG            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 dxV            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 dyC            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 dyF            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 dyG            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 dyU            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rLowW          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rLowS          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 Ro_surf        (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rSurfW         (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rSurfS         (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dxC      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dxF      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dxG      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dxV      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dyC      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dyF      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dyG      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_dyU      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 xC             (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 xG             (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 yC             (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 yG             (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rA             (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rAw            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rAs            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 rAz            (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_rA       (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_rAw      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_rAs      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_rAz      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 maskInC        (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 maskInW        (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 maskInS        (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 maskC          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 maskW          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 maskS          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 drC            (Nr+1)
+      Real*8 drF            (Nr)
+      Real*8 recip_drC      (Nr+1)
+      Real*8 recip_drF      (Nr)
+      Real*8 rC             (Nr)
+      Real*8 rF             (Nr+1)
+      Real*8 aHybSigmF      (Nr+1)
+      Real*8 bHybSigmF      (Nr+1)
+      Real*8 aHybSigmC      (Nr)
+      Real*8 bHybSigmC      (Nr)
+      Real*8 dAHybSigF      (Nr)
+      Real*8 dBHybSigF      (Nr)
+      Real*8 dBHybSigC      (Nr+1)
+      Real*8 dAHybSigC      (Nr+1)
+      Real*8 tanPhiAtU      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 tanPhiAtV      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 angleCosC      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 angleSinC      (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 u2zonDir       (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 v2zonDir       (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 fCori          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 fCoriG         (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 fCoriCos       (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
+C--   COMMON /GRID_VAR_RS/ potentially time-dependent or active RS
+C     valued grid defining variables. These grid defining variables are
+C     time-dependent when using a non-linear free surface, or they are
+C     active in an AD sense when using depth as a control parameter, or
+C     both.
+      COMMON /GRID_VAR_RS/
+     &  hFacC, hFacW, hFacS,
+     &  recip_hFacC,recip_hFacW,recip_hFacS,
+     &  R_low, recip_Rcol
+      Real*8 hFacC          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 hFacW          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 hFacS          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 recip_hFacC    (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 recip_hFacW    (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 recip_hFacS    (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8 R_low          (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8 recip_Rcol     (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
+
+C--   COMMON /GRID_I/ INTEGER valued grid defining variables.
+C     kSurfC  :: vertical index of the surface tracer cell
+C     kSurfW  :: vertical index of the surface U point
+C     kSurfS  :: vertical index of the surface V point
+C     kLowC   :: index of the r-lowest "wet cell" (2D)
+C IMPORTANT: kLowC = 0 and kSurfC,W,S = Nr+1 (or =Nr+2 on a thin-wall)
+C            where the fluid column is empty (continent)
+      COMMON /GRID_I/
+     &  kSurfC, kSurfW, kSurfS,
+     &  kLowC
+      INTEGER kSurfC(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      INTEGER kSurfW(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      INTEGER kSurfS(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      INTEGER kLowC (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
+C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 CBOP
 C     !ROUTINE: FFIELDS.h
 C     !INTERFACE:
@@ -2082,6 +3278,13 @@ C     EfluxP - p-component of Eliassen-Palm flux vector
       Real*8  pLoad    (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
       Real*8  sIceLoad (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
 
+C     gcmSST :: model in-situ Sea Surface Temperature (SST); corresponds to
+C               surface-level model variable "theta", except if using TEOS-10 ;
+C               in that case a conversion from model Conservative Temperature
+C               "theta" is applied. Note: not defined under an ice-shelf
+      COMMON /FFIELDS_INSITU_TEMP/ gcmSST
+      Real*8  gcmSST(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
 
 C- jmc: commented out until corresponding (ghost-like) code apparition
 C     dQdT  :: Thermal relaxation coefficient in W/m^2/degrees
@@ -2183,6 +3386,95 @@ C                Units are N/m^2 ;   > 0 increase vVel @ bottom
       Real*8  botDragV (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
 
 C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
+CBOP
+C     !ROUTINE: DYNVARS.h
+C     !INTERFACE:
+C     include "DYNVARS.h"
+C     !DESCRIPTION:
+C     \bv
+C     *==========================================================*
+C     | DYNVARS.h
+C     | o Dynamical model variables (common block DYNVARS_R)
+C     *==========================================================*
+C     | The value and two levels of time tendency are held for
+C     | each prognostic variable.
+C     *==========================================================*
+C     \ev
+CEOP
+
+C     State Variables:
+C     etaN  :: free-surface r-anomaly (r unit) at current time level
+C     uVel  :: zonal velocity (m/s, i=1 held at western face)
+C     vVel  :: meridional velocity (m/s, j=1 held at southern face)
+C     theta :: potential temperature (oC, held at pressure/tracer point)
+C     salt  :: salinity (g/kg, held at pressure/tracer point; note that
+C              salinity is either a conductivity ratio or, if using TEOS10,
+C              a mass ratio;here we assume it is a mass ratio even though
+C              it is only correct for TEOS10)
+C     gX, gxNm1 :: Time tendencies at current and previous time levels.
+C     etaH  :: surface r-anomaly, advanced in time consistently
+C              with 2.D flow divergence (Exact-Conservation):
+C                etaH^n+1 = etaH^n - delta_t*Div.(H^n U^n+1)
+C  note: a) used with "exactConserv", necessary for Non-Lin free-surf and mixed
+C           forward/backward free-surf time stepping (e.g., Crank-Nickelson)
+C        b) same as etaN but not necessarily at the same time, e.g.:
+C           implicDiv2DFlow=1 => etaH=etaN ; =0 => etaH=etaN^(n-1);
+
+      COMMON /DYNVARS_R/
+     &                   etaN,
+     &                   uVel,vVel,wVel,theta,salt,
+     &                   gU,   gV,
+     &                   guNm1,gvNm1,gtNm1,gsNm1
+      Real*8  etaN  (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8  uVel (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  vVel (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  wVel (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  theta(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  salt (1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  gU(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  gV(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  guNm1(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  gvNm1(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  gtNm1(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  gsNm1(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+
+
+      COMMON /DYNVARS_R_2/
+     &                   etaH
+      Real*8  etaH  (1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+
+
+
+C   The following blocks containing requires anomaly fields of control vars
+C   and related to Options:
+C   ALLOW_KAPGM_CONTROL , ALLOW_KAPREDI_CONTROL and ALLOW_BOTTOMDRAG_CONTROL
+C   have been moved to header file "CTRL_FIELDS.h"
+
+
+C     Diagnostic Variables:
+C     rhoInSitu    :: In-Situ density anomaly [kg/m^3] at cell center level.
+C     totPhiHyd    :: total hydrostatic Potential (anomaly, for now),
+C                     at cell center level ; includes surface contribution.
+C                     (for diagnostic + used in Z-coord with EOS_funct_P)
+C     phiHydLow    :: Phi-Hydrostatic at r-lower boundary
+C                     (bottom in z-coordinates, top in p-coordinates)
+C     hMixLayer    :: Mixed layer depth [m]
+C                     (for diagnostic + used GMRedi "fm07")
+C     IVDConvCount :: Impl.Vert.Diffusion convection counter:
+C                     = 0 (not convecting) or 1 (convecting)
+      COMMON /DYNVARS_DIAG/
+     &                rhoInSitu,
+     &                totPhiHyd, phiHydLow,
+     &                hMixLayer, IVDConvCount
+      Real*8  rhoInSitu(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  totPhiHyd(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+      Real*8  phiHydLow(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8  hMixLayer(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nSx,nSy)
+      Real*8  IVDConvCount(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nSx,nSy)
+
+
+
+
 
 c     ==================================================================
 c     CTRL_SIZE.h
@@ -2695,9 +3987,122 @@ C     end nonlinear equation of state
       Real*8 eosMDJWFnum(0:11), eosMDJWFden(0:12)
       COMMON /PARM_EOS_MDJWF/
      &     eosMDJWFnum, eosMDJWFden
+
+C     TEOS10 coefficients
       Real*8 teos(48)
+
+C     Parameters in the temperature conversion code for TEOS10
+C     The TEOS 10 conversion factor to go from reference salinity to
+C     practical salinity (nondim)
+      Real*8 Sprac_Sref
+C     The inverse of a plausible range of oceanic salinities (kg g-1)
+      Real*8 I_S0
+C     The inverse of a plausible range of oceanic temperatures (degC-1)
+      Real*8 I_Ts
+C     The inverse of the "specific heat" for use
+C     with Conservative Temperature, as defined with TEOS10 (degC kg J-1)
+      Real*8 I_cp0
+
+C     The following are coefficients of contributions to conservative
+C     temperature as a function of the square root of normalized
+C     absolute salinity with an offset (zS) and potential temperature
+C     (T) with a contribution Hab * zS**a * T**b.  The numbers here are
+C     copied directly from the corresponding gsw module, but the
+C     expressions here do not use the same nondimensionalization for
+C     pressure or temperature as they do.
+
+C     Tp to Tc fit constant (degC)
+      Real*8 H00
+C     Tp to Tc fit T coef. (nondim)
+      Real*8 H01
+C     Tp to Tc fit T**2 coef. (degC-1)
+      Real*8 H02
+C     Tp to Tc fit T**3 coef. (degC-2)
+      Real*8 H03
+C     Tp to Tc fit T**4 coef. (degC-3)
+      Real*8 H04
+C     Tp to Tc fit T**5 coef. (degC-4)
+      Real*8 H05
+C     Tp to Tc fit T**6 coef. (degC-5)
+      Real*8 H06
+C     Tp to Tc fit T**7 coef. (degC-6)
+      Real*8 H07
+C     Tp to Tc fit zS**2 coef. (degC)
+      Real*8 H20
+C     Tp to Tc fit zS**2 * T coef. (nondim)
+      Real*8 H21
+C     Tp to Tc fit zS**2 * T**2 coef. (degC-1)
+      Real*8 H22
+C     Tp to Tc fit zS**2 * T**3 coef. (degC-2)
+      Real*8 H23
+C     Tp to Tc fit zS**2 * T**4 coef. (degC-3)
+      Real*8 H24
+C     Tp to Tc fit zS**2 * T**5 coef. (degC-4)
+      Real*8 H25
+C     Tp to Tc fit zS**2 * T**6 coef. (degC-5)
+      Real*8 H26
+C     Tp to Tc fit zS**3 coef. (degC)
+      Real*8 H30
+C     Tp to Tc fit zS** 3* T coef. (nondim)
+      Real*8 H31
+C     Tp to Tc fit zS**3 * T**2 coef. (degC-1)
+      Real*8 H32
+C     Tp to Tc fit zS**3 * T**3 coef. (degC-2)
+      Real*8 H33
+C     Tp to Tc fit zS**3 * T**4 coef. (degC-3)
+      Real*8 H34
+C     Tp to Tc fit zS**4 coef. (degC)
+      Real*8 H40
+C     Tp to Tc fit zS**4 * T coef. (nondim)
+      Real*8 H41
+C     Tp to Tc fit zS**4 * T**2 coef. (degC-1)
+      Real*8 H42
+C     Tp to Tc fit zS**4 * T**3 coef. (degC-2)
+      Real*8 H43
+C     Tp to Tc fit zS**4 * T**4 coef. (degC-3)
+      Real*8 H44
+C     Tp to Tc fit zS**4 * T**5 coef. (degC-4)
+      Real*8 H45
+C     Tp to Tc fit zS**5 coef. (degC)
+      Real*8 H50
+C     Tp to Tc fit zS**6 coef. (degC)
+      Real*8 H60
+C     Tp to Tc fit zS**7 coef. (degC)
+      Real*8 H70
+
+C     The following are coefficients in the nominator (TPNxx) or
+C     denominator (TPDxx) of a simple rational expression that
+C     approximately converts conservative temperature to potential
+C     temperature.
+C     Simple fit numerator constant (degC)
+      Real*8 TPN00
+C     Simple fit numerator Sa coef. (degC ppt-1)
+      Real*8 TPN10
+C     Simple fit numerator Sa**2 coef. (degC ppt-2)
+      Real*8 TPN20
+C     Simple fit numerator Tc coef. (nondim)
+      Real*8 TPN01
+C     Simple fit numerator Sa * Tc coef. (ppt-1)
+      Real*8 TPN11
+C     Simple fit numerator Tc**2 coef. (degC-1)
+      Real*8 TPN02
+C     Simple fit denominator Sa coef. (ppt-1)
+      Real*8 TPD10
+C     Simple fit denominator Tc coef. (degC-1)
+      Real*8 TPD01
+C     Simple fit denominator Tc**2 coef. (degC-2)
+      Real*8 TPD02
+
       COMMON /PARM_TEOS10/
-     &     teos
+     &     teos,
+     &     Sprac_Sref, I_S0, I_Ts, I_cp0,
+     &     H00, H01, H02, H03, H04, H05, H06, H07,
+     &     H20, H21, H22, H23, H24, H25, H26,
+     &     H30, H31, H32, H33, H34,
+     &     H40, H41, H42, H43, H44, H45,
+     &     H50, H60, H70,
+     &     TPN00, TPN10, TPN20,
+     &     TPN01, TPN11, TPN02, TPD10, TPD01, TPD02
 
 C     !INPUT/OUTPUT PARAMETERS:
 C     myTime :: time counter for this thread
@@ -2707,13 +4112,54 @@ C     myThid :: thread number for this instance of the routine.
       INTEGER myIter
       INTEGER myThid
 
+      Real*8 consTemp_to_poTemp
+      EXTERNAL consTemp_to_poTemp
+
 C     !LOCAL VARIABLES:
+      INTEGER ks
+      INTEGER i,j,bi,bj
 CEOP
 
       IF (debugMode) CALL DEBUG_ENTER( 'LOAD_FIELDS_DRIVER', myThid )
 
 C--   Initialise forcing arrays that may receive multiple contributions
 
+
+C--   Determine surface temperature, usually just a copy of the surface
+C--   level of theta, but for eosType='TEOS10', we need to convert from
+C--   conservative temperature to in-situ surface temperature
+      IF ( usingPCoords ) THEN
+       ks = Nr
+      ELSE
+       ks = 1
+      ENDIF
+      IF ( fluidIsWater .AND. eosType .EQ. 'TEOS10' ) THEN
+        DO bj=myByLo(myThid),myByHi(myThid)
+         DO bi=myBxLo(myThid),myBxHi(myThid)
+          CALL CONVERT_CT2PT(
+     I         theta(1-OLx,1-OLy,ks,bi,bj),
+     I         salt(1-OLx,1-OLy,ks,bi,bj),
+     O         gcmSST(1-OLx,1-OLy,bi,bj),
+     I         myTime, myIter, myThid )
+C     apply mask (because theta=0 will lead to gcmSST<0)
+          DO j=1-OLy,sNy+OLy
+           DO i=1-OLx,sNx+OLx
+            gcmSST(i,j,bi,bj) = gcmSST(i,j,bi,bj)*maskC(i,j,ks,bi,bj)
+           ENDDO
+          ENDDO
+         ENDDO
+        ENDDO
+      ELSE
+        DO bj=myByLo(myThid),myByHi(myThid)
+         DO bi=myBxLo(myThid),myBxHi(myThid)
+          DO j=1-OLy,sNy+OLy
+           DO i=1-OLx,sNx+OLx
+            gcmSST(i,j,bi,bj) = theta(i,j,ks,bi,bj)
+           ENDDO
+          ENDDO
+         ENDDO
+        ENDDO
+      ENDIF
 
 C--   Map generic time varying controls to xx_gentim2d
       if (useCTRL) CALL CTRL_MAP_GENTIM2D( myTime, myIter, myThid )
@@ -2732,6 +4178,11 @@ C--   Call external CheapAML forcing package
 
 
 
+
+      IF ( fluidIsWater .AND. useDiagnostics ) THEN
+        CALL DIAGNOSTICS_FILL( gcmSST, 'GCM_SST ',
+     &                               0, 1, 0, 1, 1, myThid )
+      ENDIF
 
       IF (debugMode) CALL DEBUG_LEAVE( 'LOAD_FIELDS_DRIVER', myThid )
 

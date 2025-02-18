@@ -182,9 +182,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -379,6 +376,16 @@ c# include "ECCO_CPPOPTIONS.h"
 
 
 C     Package-specific options go here
+
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic viscosity -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C viscosity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
 
 C allow LeithQG coefficient to be calculated
 
@@ -3146,7 +3153,7 @@ C     MOM_CALC_VISC are not used here (corresponds to the "old" version).
      &      *recip_dxV(i+1,j,bi,bj) )
      &   *drF(k)*2.*(
      &                Ahtmp*vFld(i,j)*cosFacV(j,bi,bj)
-     &               -A4tmp*del2v(i,j)*cosFacV(j,bi,bj)
+     &               -viscA4*del2v(i,j)*sqcosFacV(j,bi,bj)
      &              )
        ENDDO
       ENDDO
@@ -3164,10 +3171,10 @@ C     from MOM_CALC_VISC, consistent with dissipation in the interior
      &   *recip_drF(k)*recip_rAs(i,j,bi,bj)
      &   *( hFacZClosedW*dyU( i ,j,bi,bj)*recip_dxV( i ,j,bi,bj)
      &         *( viscAh_Z(i  ,j)*vFld(i,j)*cosFacV(j,bi,bj)
-     &           -viscA4_Z(i  ,j)*del2v(i,j)*cosFacV(j,bi,bj) )
+     &           -viscA4_Z(i  ,j)*del2v(i,j)*sqcosFacV(j,bi,bj) )
      &     +hFacZClosedE*dyU(i+1,j,bi,bj)*recip_dxV(i+1,j,bi,bj)
      &         *( viscAh_Z(i+1,j)*vFld(i,j)*cosFacV(j,bi,bj)
-     &           -viscA4_Z(i+1,j)*del2v(i,j)*cosFacV(j,bi,bj) )
+     &           -viscA4_Z(i+1,j)*del2v(i,j)*sqcosFacV(j,bi,bj) )
      &    )*drF(k)*sideDragFactor
        ENDDO
       ENDDO

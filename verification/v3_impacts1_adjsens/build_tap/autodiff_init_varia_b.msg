@@ -192,7 +192,7 @@
 192 gmredi_calc_tensor: (TC19) Equality test on reals is not reliable
 193 gmredi_calc_tensor: (TC30) Type mismatch in argument 15 of procedure gmredi_slope_limit, expected INTEGER(-3:66,-3:66), is here INTEGER
 194 gmredi_calc_tensor: (TC33) External procedure gmredi_diagnostics_fill is not declared
-195 (DF05) External routine gmredi_diagnostics_fill, called by (gmredi_calc_tensor), is assumed default In:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4).......111 and Out:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4).......111
+195 (DF05) External routine gmredi_diagnostics_fill, called by (gmredi_calc_tensor), is assumed default In:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)111 and Out:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)111
 196 gmredi_slope_psi: (TC19) Equality test on reals is not reliable
 197 gmredi_slope_psi: (TC19) Equality test on reals is not reliable
 198 gmredi_slope_limit: (TC19) Equality test on reals is not reliable
@@ -295,166 +295,170 @@
 295 integr_continuity: (TC19) Equality test on reals is not reliable
 296 exch_xyz_rl: (AD09) Please provide a differential of function exch1_rl_cube for arguments Arg1=(in;out)
 297 exch_xyz_rl: (AD09) Please provide a differential of function exch1_rl for arguments Arg1=(in;out)
-298 load_fields_driver: (AD07) Data-Flow recovery (TBR) on this call to ctrl_map_gentim2d needs to save the I-O state
-299 ctrl_map_gentim2d: (TC30) Type mismatch in argument 2 of procedure ctrl_get_gen, expected INTEGER(4), is here INTEGER
-300 ctrl_map_gentim2d: (TC30) Type mismatch in argument 6 of procedure ctrl_get_gen, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8
-301 ctrl_map_gentim2d: (TC30) Type mismatch in argument 7 of procedure ctrl_get_gen, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8
-302 ctrl_map_gentim2d: (TC30) Type mismatch in argument 11 of procedure ctrl_get_gen, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8
-303 ctrl_map_gentim2d: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
-304 ctrl_map_gentim2d: (AD07) Data-Flow recovery (TBR) on this call to ctrl_get_gen needs to save the I-O state
-305 ctrl_get_gen: (DD31) Declaration statement external(ilnblnk) moved 1 declarations up
-306 ctrl_get_gen: (TC19) Equality test on reals is not reliable
-307 ctrl_get_gen: (AD09) Please provide a differential of function active_read_xy for arguments Arg2=(out) Arg8=(in;out)
-308 ctrl_get_gen: (AD09) Please provide a differential of function active_read_xy for arguments Arg2=(out) Arg8=(in;out)
-309 ctrl_get_gen: (AD09) Please provide a differential of function active_read_xy for arguments Arg2=(out) Arg8=(in;out)
-310 ctrl_get_gen_rec: (TC19) Equality test on reals is not reliable
-311 ctrl_get_gen_rec: (TC19) Equality test on reals is not reliable
-312 external_fields_load: (AD03) Varied variable fv[1,sny,1,1] written by I-O to file standardmessageunit
-313 external_fields_load: (AD03) Varied variable fu[1,sny,1,1] written by I-O to file standardmessageunit
-314 external_fields_load: (AD03) Varied variable empmr[1,sny,1,1] written by I-O to file standardmessageunit
-315 external_fields_load: (AD03) Varied variable qnet[1,sny,1,1] written by I-O to file standardmessageunit
-316 external_fields_load: (AD03) Varied variable sss[1,sny,1,1] written by I-O to file standardmessageunit
-317 external_fields_load: (AD03) Varied variable sst[1,sny,1,1] written by I-O to file standardmessageunit
-318 read_rec_xy_rs: (TC30) Type mismatch in argument 8 of procedure mds_read_field, expected REAL(1), is here REAL*8(1)
-319 read_rec_xy_rs: (TC30) Type mismatch in argument 9 of procedure mds_read_field, expected REAL(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,1,1)
-320 get_periodic_interval: (TC19) Equality test on reals is not reliable
-321 get_periodic_interval: (TC19) Equality test on reals is not reliable
-322 exch_uv_xy_rs: (AD09) Please provide a differential of function exch1_uv_rs_cube for arguments Arg1=(in;out) Arg2=(in;out)
-323 exch_uv_xy_rs: (AD09) Please provide a differential of function exch1_rs for arguments Arg1=(in;out)
-324 exch_uv_xy_rs: (AD09) Please provide a differential of function exch1_rs for arguments Arg1=(in;out)
-325 exch_uv_3d_rl: (AD09) Please provide a differential of function exch1_uv_rl_cube for arguments Arg1=(in;out) Arg2=(in;out)
-326 exch_uv_3d_rl: (AD09) Please provide a differential of function exch1_rl for arguments Arg1=(in;out)
-327 exch_uv_3d_rl: (AD09) Please provide a differential of function exch1_rl for arguments Arg1=(in;out)
-328 correction_step: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-329 solve_for_pressure: (DD31) Declaration statement external(different_multiple) moved 1 declarations up
-330 solve_for_pressure: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-331 solve_for_pressure: (TC19) Equality test on reals is not reliable
-332 solve_for_pressure: (AD03) Varied variable firstresidual written by I-O to file msgbuf
-333 solve_for_pressure: (AD03) Varied variable minresidualsq written by I-O to file msgbuf
-334 solve_for_pressure: (AD03) Varied variable lastresidual written by I-O to file msgbuf
-335 solve_for_pressure: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
-336 solve_for_pressure: (AD09) Please provide a differential of function cg2d for arguments Arg1=(in) Arg2=(in;out)
-337 calc_div_ghat: (TC19) Equality test on reals is not reliable
-338 calc_div_ghat: (TC19) Equality test on reals is not reliable
-339 thermodynamics: (DD31) Declaration statement external(different_multiple) moved 1 declarations up
-340 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
-341 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
-342 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
-343 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
+298 load_fields_driver: (DD31) Declaration statement external(constemp_to_potemp) moved 1 declarations up
+299 load_fields_driver: (TC30) Type mismatch in argument 1 of procedure convert_ct2pt, expected REAL*8(-3:66,-3:66), is here REAL*8
+300 load_fields_driver: (TC30) Type mismatch in argument 2 of procedure convert_ct2pt, expected REAL*8(-3:66,-3:66), is here REAL*8
+301 load_fields_driver: (TC30) Type mismatch in argument 3 of procedure convert_ct2pt, expected REAL*8(-3:66,-3:66), is here REAL*8
+302 load_fields_driver: (AD07) Data-Flow recovery (TBR) on this call to ctrl_map_gentim2d needs to save the I-O state
+303 ctrl_map_gentim2d: (TC30) Type mismatch in argument 2 of procedure ctrl_get_gen, expected INTEGER(4), is here INTEGER
+304 ctrl_map_gentim2d: (TC30) Type mismatch in argument 6 of procedure ctrl_get_gen, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8
+305 ctrl_map_gentim2d: (TC30) Type mismatch in argument 7 of procedure ctrl_get_gen, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8
+306 ctrl_map_gentim2d: (TC30) Type mismatch in argument 11 of procedure ctrl_get_gen, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8
+307 ctrl_map_gentim2d: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
+308 ctrl_map_gentim2d: (AD07) Data-Flow recovery (TBR) on this call to ctrl_get_gen needs to save the I-O state
+309 ctrl_get_gen: (DD31) Declaration statement external(ilnblnk) moved 1 declarations up
+310 ctrl_get_gen: (TC19) Equality test on reals is not reliable
+311 ctrl_get_gen: (AD09) Please provide a differential of function active_read_xy for arguments Arg2=(out) Arg8=(in;out)
+312 ctrl_get_gen: (AD09) Please provide a differential of function active_read_xy for arguments Arg2=(out) Arg8=(in;out)
+313 ctrl_get_gen: (AD09) Please provide a differential of function active_read_xy for arguments Arg2=(out) Arg8=(in;out)
+314 ctrl_get_gen_rec: (TC19) Equality test on reals is not reliable
+315 ctrl_get_gen_rec: (TC19) Equality test on reals is not reliable
+316 external_fields_load: (AD03) Varied variable fv[1,sny,1,1] written by I-O to file standardmessageunit
+317 external_fields_load: (AD03) Varied variable fu[1,sny,1,1] written by I-O to file standardmessageunit
+318 external_fields_load: (AD03) Varied variable empmr[1,sny,1,1] written by I-O to file standardmessageunit
+319 external_fields_load: (AD03) Varied variable qnet[1,sny,1,1] written by I-O to file standardmessageunit
+320 external_fields_load: (AD03) Varied variable sss[1,sny,1,1] written by I-O to file standardmessageunit
+321 external_fields_load: (AD03) Varied variable sst[1,sny,1,1] written by I-O to file standardmessageunit
+322 read_rec_xy_rs: (TC30) Type mismatch in argument 8 of procedure mds_read_field, expected REAL(1), is here REAL*8(1)
+323 read_rec_xy_rs: (TC30) Type mismatch in argument 9 of procedure mds_read_field, expected REAL(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,1,1)
+324 get_periodic_interval: (TC19) Equality test on reals is not reliable
+325 get_periodic_interval: (TC19) Equality test on reals is not reliable
+326 exch_uv_xy_rs: (AD09) Please provide a differential of function exch1_uv_rs_cube for arguments Arg1=(in;out) Arg2=(in;out)
+327 exch_uv_xy_rs: (AD09) Please provide a differential of function exch1_rs for arguments Arg1=(in;out)
+328 exch_uv_xy_rs: (AD09) Please provide a differential of function exch1_rs for arguments Arg1=(in;out)
+329 exch_uv_3d_rl: (AD09) Please provide a differential of function exch1_uv_rl_cube for arguments Arg1=(in;out) Arg2=(in;out)
+330 exch_uv_3d_rl: (AD09) Please provide a differential of function exch1_rl for arguments Arg1=(in;out)
+331 exch_uv_3d_rl: (AD09) Please provide a differential of function exch1_rl for arguments Arg1=(in;out)
+332 correction_step: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+333 solve_for_pressure: (DD31) Declaration statement external(different_multiple) moved 1 declarations up
+334 solve_for_pressure: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+335 solve_for_pressure: (TC19) Equality test on reals is not reliable
+336 solve_for_pressure: (AD03) Varied variable firstresidual written by I-O to file msgbuf
+337 solve_for_pressure: (AD03) Varied variable minresidualsq written by I-O to file msgbuf
+338 solve_for_pressure: (AD03) Varied variable lastresidual written by I-O to file msgbuf
+339 solve_for_pressure: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
+340 solve_for_pressure: (AD09) Please provide a differential of function cg2d for arguments Arg1=(in) Arg2=(in;out)
+341 calc_div_ghat: (TC19) Equality test on reals is not reliable
+342 calc_div_ghat: (TC19) Equality test on reals is not reliable
+343 thermodynamics: (DD31) Declaration statement external(different_multiple) moved 1 declarations up
 344 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
 345 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
 346 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
-347 thermodynamics: (DF03) variable tradvcfl[bj,bi,1] is used before initialized
-348 thermodynamics: (DF03) variable tradvcfl is used before initialized
-349 thermodynamics: (AD14) Checkpointing this call to temp_integrate needs to save hidden variable: a2[save in swfrac]
-350 thermodynamics: (AD14) Checkpointing this call to temp_integrate needs to save hidden variable: a1[save in swfrac]
-351 thermodynamics: (AD14) Checkpointing this call to temp_integrate needs to save hidden variable: rfac[save in swfrac]
-352 thermodynamics: (AD14) Summary: differentiated procedure of thermodynamics needs to save hidden variables rfac[save in swfrac], a1[save in swfrac], a2[save in swfrac], from PROCEDURE swfrac
-353 calc_wsurf_tr: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
-354 calc_wsurf_tr: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
-355 salt_integrate: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-356 salt_integrate: (TC30) Type mismatch in argument 5 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
-357 salt_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
-358 salt_integrate: (TC30) Type mismatch in argument 14 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-359 salt_integrate: (TC30) Type mismatch in argument 15 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-360 salt_integrate: (TC30) Type mismatch in argument 16 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-361 salt_integrate: (TC30) Type mismatch in argument 23 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-362 salt_integrate: (TC30) Type mismatch in argument 25 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-363 salt_integrate: (TC30) Type mismatch in argument 26 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-364 salt_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
-365 salt_integrate: (TC30) Type mismatch in argument 4 of procedure timestep_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-366 salt_integrate: (TC30) Type mismatch in argument 8 of procedure gad_implicit_r, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-367 salt_integrate: (TC30) Type mismatch in argument 4 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-368 salt_integrate: (TC30) Type mismatch in argument 5 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-369 salt_integrate: (TC30) Type mismatch in argument 3 of procedure cycle_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-370 temp_integrate: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-371 temp_integrate: (TC30) Type mismatch in argument 5 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
-372 temp_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
-373 temp_integrate: (TC30) Type mismatch in argument 14 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-374 temp_integrate: (TC30) Type mismatch in argument 15 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-375 temp_integrate: (TC30) Type mismatch in argument 16 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-376 temp_integrate: (TC30) Type mismatch in argument 23 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
-377 temp_integrate: (TC30) Type mismatch in argument 25 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-378 temp_integrate: (TC30) Type mismatch in argument 26 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-379 temp_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
-380 temp_integrate: (TC30) Type mismatch in argument 4 of procedure timestep_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-381 temp_integrate: (TC30) Type mismatch in argument 8 of procedure gad_implicit_r, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-382 temp_integrate: (TC30) Type mismatch in argument 4 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-383 temp_integrate: (TC30) Type mismatch in argument 5 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-384 temp_integrate: (TC30) Type mismatch in argument 3 of procedure cycle_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
-385 temp_integrate: (AD14) Checkpointing this call to apply_forcing_t needs to save hidden variable: a2[save in swfrac]
-386 temp_integrate: (AD14) Checkpointing this call to apply_forcing_t needs to save hidden variable: a1[save in swfrac]
-387 temp_integrate: (AD14) Checkpointing this call to apply_forcing_t needs to save hidden variable: rfac[save in swfrac]
-388 temp_integrate: (AD14) Summary: differentiated procedure of temp_integrate needs to save hidden variables rfac[save in swfrac], a1[save in swfrac], a2[save in swfrac], from PROCEDURE swfrac
-389 gad_advection: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
-390 gad_advection: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-391 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst2u1_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
-392 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_fluxlimit_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
-393 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
-394 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3fl_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
-395 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_os7mp_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
-396 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst2u1_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
-397 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_fluxlimit_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
-398 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
-399 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3fl_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
-400 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_os7mp_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
-401 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst2u1_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-402 gad_advection: (TC30) Type mismatch in argument 9 of procedure gad_dst2u1_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-403 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_fluxlimit_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-404 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_fluxlimit_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-405 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_dst3_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-406 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst3_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-407 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_dst3fl_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-408 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst3fl_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-409 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_os7mp_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-410 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_os7mp_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
-411 gad_advection: (TC30) Type mismatch in argument 1 of procedure diagnostics_fill, expected REAL*8(-3:66,-3:66), is here REAL*8
-412 gad_calc_rhs: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
-413 gad_calc_rhs: (TC19) Equality test on reals is not reliable
-414 gad_calc_rhs: (TC19) Equality test on reals is not reliable
-415 gad_calc_rhs: (TC19) Equality test on reals is not reliable
-416 gad_calc_rhs: (TC19) Equality test on reals is not reliable
+347 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
+348 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
+349 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
+350 thermodynamics: (TC30) Type mismatch in argument 2 of procedure debug_stats_rl, expected REAL*8(-3:66,-3:66,1,1), is here REAL*8(-3:66,-3:66,31,1,1)
+351 thermodynamics: (DF03) variable tradvcfl[bj,bi,1] is used before initialized
+352 thermodynamics: (DF03) variable tradvcfl is used before initialized
+353 thermodynamics: (AD14) Checkpointing this call to temp_integrate needs to save hidden variable: a2[save in swfrac]
+354 thermodynamics: (AD14) Checkpointing this call to temp_integrate needs to save hidden variable: a1[save in swfrac]
+355 thermodynamics: (AD14) Checkpointing this call to temp_integrate needs to save hidden variable: rfac[save in swfrac]
+356 thermodynamics: (AD14) Summary: differentiated procedure of thermodynamics needs to save hidden variables rfac[save in swfrac], a1[save in swfrac], a2[save in swfrac], from PROCEDURE swfrac
+357 calc_wsurf_tr: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
+358 calc_wsurf_tr: (AD09) Please provide a differential of function global_sum_tile_rl for arguments Arg1=(in;out) Arg2=(out)
+359 salt_integrate: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+360 salt_integrate: (TC30) Type mismatch in argument 5 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
+361 salt_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
+362 salt_integrate: (TC30) Type mismatch in argument 14 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+363 salt_integrate: (TC30) Type mismatch in argument 15 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+364 salt_integrate: (TC30) Type mismatch in argument 16 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+365 salt_integrate: (TC30) Type mismatch in argument 23 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+366 salt_integrate: (TC30) Type mismatch in argument 25 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+367 salt_integrate: (TC30) Type mismatch in argument 26 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+368 salt_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
+369 salt_integrate: (TC30) Type mismatch in argument 4 of procedure timestep_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+370 salt_integrate: (TC30) Type mismatch in argument 8 of procedure gad_implicit_r, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+371 salt_integrate: (TC30) Type mismatch in argument 4 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+372 salt_integrate: (TC30) Type mismatch in argument 5 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+373 salt_integrate: (TC30) Type mismatch in argument 3 of procedure cycle_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+374 temp_integrate: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+375 temp_integrate: (TC30) Type mismatch in argument 5 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
+376 temp_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
+377 temp_integrate: (TC30) Type mismatch in argument 14 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+378 temp_integrate: (TC30) Type mismatch in argument 15 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+379 temp_integrate: (TC30) Type mismatch in argument 16 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+380 temp_integrate: (TC30) Type mismatch in argument 23 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66), is here REAL*8
+381 temp_integrate: (TC30) Type mismatch in argument 25 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+382 temp_integrate: (TC30) Type mismatch in argument 26 of procedure gad_calc_rhs, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+383 temp_integrate: (TC30) Type mismatch in argument 6 of procedure adams_bashforth2, expected REAL*8(-3:66,-3:66,*), is here REAL*8
+384 temp_integrate: (TC30) Type mismatch in argument 4 of procedure timestep_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+385 temp_integrate: (TC30) Type mismatch in argument 8 of procedure gad_implicit_r, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+386 temp_integrate: (TC30) Type mismatch in argument 4 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+387 temp_integrate: (TC30) Type mismatch in argument 5 of procedure cycle_ab_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+388 temp_integrate: (TC30) Type mismatch in argument 3 of procedure cycle_tracer, expected REAL*8(-3:66,-3:66,31), is here REAL*8
+389 temp_integrate: (AD14) Checkpointing this call to apply_forcing_t needs to save hidden variable: a2[save in swfrac]
+390 temp_integrate: (AD14) Checkpointing this call to apply_forcing_t needs to save hidden variable: a1[save in swfrac]
+391 temp_integrate: (AD14) Checkpointing this call to apply_forcing_t needs to save hidden variable: rfac[save in swfrac]
+392 temp_integrate: (AD14) Summary: differentiated procedure of temp_integrate needs to save hidden variables rfac[save in swfrac], a1[save in swfrac], a2[save in swfrac], from PROCEDURE swfrac
+393 gad_advection: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
+394 gad_advection: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+395 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst2u1_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
+396 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_fluxlimit_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
+397 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
+398 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3fl_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
+399 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_os7mp_adv_x, expected REAL*8(-3:66,-3:66), is here REAL*8
+400 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst2u1_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
+401 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_fluxlimit_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
+402 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
+403 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst3fl_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
+404 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_os7mp_adv_y, expected REAL*8(-3:66,-3:66), is here REAL*8
+405 gad_advection: (TC30) Type mismatch in argument 7 of procedure gad_dst2u1_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+406 gad_advection: (TC30) Type mismatch in argument 9 of procedure gad_dst2u1_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+407 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_fluxlimit_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+408 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_fluxlimit_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+409 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_dst3_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+410 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst3_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+411 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_dst3fl_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+412 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_dst3fl_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+413 gad_advection: (TC30) Type mismatch in argument 6 of procedure gad_os7mp_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+414 gad_advection: (TC30) Type mismatch in argument 8 of procedure gad_os7mp_adv_r, expected REAL*8(-3:66,-3:66), is here REAL*8
+415 gad_advection: (TC30) Type mismatch in argument 1 of procedure diagnostics_fill, expected REAL*8(-3:66,-3:66), is here REAL*8
+416 gad_calc_rhs: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
 417 gad_calc_rhs: (TC19) Equality test on reals is not reliable
 418 gad_calc_rhs: (TC19) Equality test on reals is not reliable
 419 gad_calc_rhs: (TC19) Equality test on reals is not reliable
 420 gad_calc_rhs: (TC19) Equality test on reals is not reliable
 421 gad_calc_rhs: (TC19) Equality test on reals is not reliable
-422 gad_os7mp_adv_x: (TC19) Equality test on reals is not reliable
-423 gad_os7mp_adv_y: (TC19) Equality test on reals is not reliable
-424 gad_os7mp_adv_r: (TC19) Equality test on reals is not reliable
-425 gmredi_xtransport: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-426 gmredi_ytransport: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-427 gad_implicit_r: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
-428 gad_implicit_r: (DD02) Cannot combine successive declarations of character array: CHARACTER(4) and CHARACTER(4)(4) (ignored new)
-429 gad_implicit_r: (DD06) Cannot combine successive declarations of function gad_diag_sufx return type: CHARACTER(4) and CHARACTER(4)(4) (overwritten previous)
-430 gad_implicit_r: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-431 solve_pentadiagonal: (TC19) Equality test on reals is not reliable
-432 solve_tridiagonal: (TC19) Equality test on reals is not reliable
-433 solve_tridiagonal: (TC19) Equality test on reals is not reliable
-434 apply_forcing_t: (TC19) Equality test on reals is not reliable
-435 impldiff: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
-436 impldiff: (DD02) Cannot combine successive declarations of character array: CHARACTER(4) and CHARACTER(4)(4) (ignored new)
-437 impldiff: (DD06) Cannot combine successive declarations of function gad_diag_sufx return type: CHARACTER(4) and CHARACTER(4)(4) (overwritten previous)
-438 impldiff: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
-439 impldiff: (TC19) Equality test on reals is not reliable
-440 impldiff: (TC19) Equality test on reals is not reliable
-441 impldiff: (TC19) Equality test on reals is not reliable
-442 impldiff: (TC19) Equality test on reals is not reliable
-443 impldiff: (TC30) Type mismatch in argument 1 of procedure diagnostics_fill, expected REAL*8(-3:66,-3:66), is here REAL*8(-3:66,-3:66,31)
-444 (DF05) External routine gad_diag_sufx, called by (gad_advection gad_calc_rhs gad_implicit_r impldiff), is assumed default In:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4).......11. and Out:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4).......111
-445 tracers_correction_step: (TC19) Equality test on reals is not reliable
-446 convective_adjustment: (TC30) Type mismatch in argument 6 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
-447 convective_adjustment: (TC30) Type mismatch in argument 7 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
-448 convective_adjustment: (TC30) Type mismatch in argument 6 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
-449 convective_adjustment: (TC30) Type mismatch in argument 7 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
-450 convective_adjustment: (TC30) Type mismatch in argument 1 of procedure diagnostics_fill, expected REAL*8(-3:66,-3:66), is here REAL*8(-3:66,-3:66,31)
-451 different_multiple: (TC19) Equality test on reals is not reliable
-452 update_cg2d: (TC19) Equality test on reals is not reliable
-453 update_cg2d: (TC19) Equality test on reals is not reliable
-454 update_cg2d: (TC19) Equality test on reals is not reliable
-455 exch_xy_rs: (AD09) Please provide a differential of function exch1_rs_cube for arguments Arg1=(in;out)
-456 exch_xy_rs: (AD09) Please provide a differential of function exch1_rs for arguments Arg1=(in;out)
-457 update_etah: (TC19) Equality test on reals is not reliable
-458 update_etah: (TC19) Equality test on reals is not reliable
-459 exch_xy_rl: (AD09) Please provide a differential of function exch1_rl_cube for arguments Arg1=(in;out)
-460 exch_xy_rl: (AD09) Please provide a differential of function exch1_rl for arguments Arg1=(in;out)
+422 gad_calc_rhs: (TC19) Equality test on reals is not reliable
+423 gad_calc_rhs: (TC19) Equality test on reals is not reliable
+424 gad_calc_rhs: (TC19) Equality test on reals is not reliable
+425 gad_calc_rhs: (TC19) Equality test on reals is not reliable
+426 gad_os7mp_adv_x: (TC19) Equality test on reals is not reliable
+427 gad_os7mp_adv_y: (TC19) Equality test on reals is not reliable
+428 gad_os7mp_adv_r: (TC19) Equality test on reals is not reliable
+429 gmredi_xtransport: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+430 gmredi_ytransport: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+431 gad_implicit_r: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
+432 gad_implicit_r: (DD02) Cannot combine successive declarations of character array: CHARACTER(4) and CHARACTER(4)(4) (ignored new)
+433 gad_implicit_r: (DD06) Cannot combine successive declarations of function gad_diag_sufx return type: CHARACTER(4) and CHARACTER(4)(4) (overwritten previous)
+434 gad_implicit_r: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+435 solve_pentadiagonal: (TC19) Equality test on reals is not reliable
+436 solve_tridiagonal: (TC19) Equality test on reals is not reliable
+437 solve_tridiagonal: (TC19) Equality test on reals is not reliable
+438 apply_forcing_t: (TC19) Equality test on reals is not reliable
+439 impldiff: (DD31) Declaration statement external(gad_diag_sufx) moved 1 declarations up
+440 impldiff: (DD02) Cannot combine successive declarations of character array: CHARACTER(4) and CHARACTER(4)(4) (ignored new)
+441 impldiff: (DD06) Cannot combine successive declarations of function gad_diag_sufx return type: CHARACTER(4) and CHARACTER(4)(4) (overwritten previous)
+442 impldiff: (DD31) Declaration statement external(diagnostics_is_on) moved 1 declarations up
+443 impldiff: (TC19) Equality test on reals is not reliable
+444 impldiff: (TC19) Equality test on reals is not reliable
+445 impldiff: (TC19) Equality test on reals is not reliable
+446 impldiff: (TC19) Equality test on reals is not reliable
+447 impldiff: (TC30) Type mismatch in argument 1 of procedure diagnostics_fill, expected REAL*8(-3:66,-3:66), is here REAL*8(-3:66,-3:66,31)
+448 (DF05) External routine gad_diag_sufx, called by (gad_advection gad_calc_rhs gad_implicit_r impldiff), is assumed default In:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)11. and Out:..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)..........(0)..........(1)..........(2)..........(3)..........(4)..........(5)..........(6)..........(7)..........(8)..........(9)111
+449 tracers_correction_step: (TC19) Equality test on reals is not reliable
+450 convective_adjustment: (TC30) Type mismatch in argument 6 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
+451 convective_adjustment: (TC30) Type mismatch in argument 7 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
+452 convective_adjustment: (TC30) Type mismatch in argument 6 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
+453 convective_adjustment: (TC30) Type mismatch in argument 7 of procedure find_rho_2d, expected REAL*8(-3:66,-3:66), is here REAL*8
+454 convective_adjustment: (TC30) Type mismatch in argument 1 of procedure diagnostics_fill, expected REAL*8(-3:66,-3:66), is here REAL*8(-3:66,-3:66,31)
+455 different_multiple: (TC19) Equality test on reals is not reliable
+456 update_cg2d: (TC19) Equality test on reals is not reliable
+457 update_cg2d: (TC19) Equality test on reals is not reliable
+458 update_cg2d: (TC19) Equality test on reals is not reliable
+459 exch_xy_rs: (AD09) Please provide a differential of function exch1_rs_cube for arguments Arg1=(in;out)
+460 exch_xy_rs: (AD09) Please provide a differential of function exch1_rs for arguments Arg1=(in;out)
+461 update_etah: (TC19) Equality test on reals is not reliable
+462 update_etah: (TC19) Equality test on reals is not reliable
+463 exch_xy_rl: (AD09) Please provide a differential of function exch1_rl_cube for arguments Arg1=(in;out)
+464 exch_xy_rl: (AD09) Please provide a differential of function exch1_rl for arguments Arg1=(in;out)

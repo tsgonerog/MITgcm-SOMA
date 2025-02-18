@@ -189,9 +189,6 @@ C     a different file for each tile) and read are thread-safe.
 C
 C--   Flag to turn off the writing of error message to ioUnit zero
 C
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-C
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -386,6 +383,16 @@ C# include "ECCO_CPPOPTIONS.h"
 C
 C
 C     Package-specific options go here
+C
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic viscosity -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
+C
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C viscosity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects momentum viscosity; to use it
+C in the tracer equations it needs to be set in GAD_OPTIONS.h
 C
 C allow LeithQG coefficient to be calculated
 C
@@ -3084,34 +3091,6 @@ C
               ahtmp = x1
               CALL PUSHCONTROL1B(1)
             END IF
-            IF (visca4 + visca4grid*ras(i, j, bi, bj)**2/deltatmom .GT. 
-     +          visca4max) THEN
-              CALL PUSHREAL8(a4tmp)
-              a4tmp = visca4max
-              CALL PUSHCONTROL1B(0)
-            ELSE
-              CALL PUSHREAL8(a4tmp)
-              a4tmp = visca4 + visca4grid*ras(i, j, bi, bj)**2/deltatmom
-              CALL PUSHCONTROL1B(1)
-            END IF
-            IF (visca4gridmax .GT. 0.) THEN
-              IF (a4tmp .GT. visca4gridmax*ras(i, j, bi, bj)**2/
-     +            deltatmom) THEN
-                CALL PUSHCONTROL1B(1)
-                a4tmp = visca4gridmax*ras(i, j, bi, bj)**2/deltatmom
-              ELSE
-                CALL PUSHCONTROL1B(1)
-                a4tmp = a4tmp
-              END IF
-            ELSE
-              CALL PUSHCONTROL1B(0)
-            END IF
-            IF (a4tmp .LT. visca4gridmin*ras(i, j, bi, bj)**2/deltatmom
-     +      ) THEN
-              a4tmp = visca4gridmin*ras(i, j, bi, bj)**2/deltatmom
-            ELSE
-              a4tmp = a4tmp
-            END IF
           ENDDO
         ENDDO
         DO ii1=1-oly,oly+sny
@@ -3129,14 +3108,8 @@ C
      +        recip_dxv(i+1, j, bi, bj))*vdragtermsb(i, j))
             vdragtermsb(i, j) = 0.D0
             vfldb(i, j) = vfldb(i, j) + ahtmp*cosfacv(j, bi, bj)*tempb
-            del2vb(i, j) = del2vb(i, j) - a4tmp*cosfacv(j, bi, bj)*tempb
-            CALL POPCONTROL1B(branch)
-            CALL POPCONTROL1B(branch)
-            IF (branch .EQ. 0) THEN
-              CALL POPREAL8(a4tmp)
-            ELSE
-              CALL POPREAL8(a4tmp)
-            END IF
+            del2vb(i, j) = del2vb(i, j) - visca4*sqcosfacv(j, bi, bj)*
+     +        tempb
             CALL POPCONTROL1B(branch)
             IF (branch .EQ. 0) THEN
               CALL POPREAL8(ahtmp)
@@ -3183,13 +3156,13 @@ C
             tempb3 = hfaczclosede*dyu(i+1, j, bi, bj)*recip_dxv(i+1, j, 
      +        bi, bj)*tempb
             tempb4 = cosfacv(j, bi, bj)*tempb3
-            tempb5 = -(cosfacv(j, bi, bj)*tempb3)
+            tempb5 = -(sqcosfacv(j, bi, bj)*tempb3)
             visca4_zb(i+1, j) = visca4_zb(i+1, j) + del2v(i, j)*tempb5
             viscah_zb(i+1, j) = viscah_zb(i+1, j) + vfld(i, j)*tempb4
             tempb1 = cosfacv(j, bi, bj)*tempb0
             vfldb(i, j) = vfldb(i, j) + viscah_z(i+1, j)*tempb4 + 
      +        viscah_z(i, j)*tempb1
-            tempb2 = -(cosfacv(j, bi, bj)*tempb0)
+            tempb2 = -(sqcosfacv(j, bi, bj)*tempb0)
             del2vb(i, j) = del2vb(i, j) + visca4_z(i+1, j)*tempb5 + 
      +        visca4_z(i, j)*tempb2
             visca4_zb(i, j) = visca4_zb(i, j) + del2v(i, j)*tempb2

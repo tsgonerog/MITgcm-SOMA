@@ -179,9 +179,6 @@ C     a different file for each tile) and read are thread-safe.
 
 C--   Flag to turn off the writing of error message to ioUnit zero
 
-C--   Alternative formulation of BYTESWAP, faster than
-C     compiler flag -byteswapio on the Altix.
-
 C--   Flag to turn on old default of opening scratch files with the
 C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
 C     caused filename conflicts on some multi-node/multi-processor platforms
@@ -417,6 +414,67 @@ C Allows to use the Boundary-Value-Problem method to evaluate GM Bolus transport
 C Allow QG Leith variable viscosity to be added to GMRedi coefficient
 
 C Related to Adjoint-code:
+
+CBOP
+C !ROUTINE: GAD_OPTIONS.h
+
+C !INTERFACE:
+C #include "GAD_OPTIONS.h"
+
+C !DESCRIPTION:
+C Contains CPP macros/flags for controlling optional features of package.
+CEOP
+
+C CPP options file for GAD (Generic Advection Diffusion) package
+C Use this file for selecting options within the GAD package
+
+
+C     Package-specific Options & Macros go here
+
+C This flag selects the form of COSINE(lat) scaling of horizontal
+C bi-harmonic diffusivity -- only on lat-lon grid.
+C Setting this flag here only affects tracer diffusivity; to use it
+C in the momentum equations it needs to be set in MOM_COMMON_OPTIONS.h
+
+C This selects isotropic scaling of horizontal harmonic and bi-harmonic
+C diffusivity when using the COSINE(lat) scaling -- only on lat-lon grid.
+C Setting this flag here only affects tracer diffusivity; to use it
+C in the momentum equations it needs to be set in MOM_COMMON_OPTIONS.h
+
+C As of checkpoint41, the inclusion of multi-dimensional advection
+C introduces excessive recomputation/storage for the adjoint.
+C We can disable it here using CPP because run-time flags are insufficient.
+
+C Use compressible flow method for multi-dim advection instead of old, less
+C accurate jmc method. Note: option has no effect on SOM advection which
+C always use compressible flow method.
+
+C This enable the use of 2nd-Order Moment advection scheme (Prather, 1986) for
+C Temperature and Salinity ; due to large memory space (10 times more / tracer)
+C requirement, by default, this part of the code is not compiled.
+
+C Hack to get rid of negatives caused by Redi.  Works by restricting the
+C outgoing flux (only contributions computed in gad_calc_rhs) for each cell
+C to be no more than the amount of tracer in the cell (see Smolarkiewicz
+C MWR 1989 and Bott MWR 1989).
+C The flux contributions computed in gad_calc_rhs which are affected by
+C this hack are:
+C - explicit diffusion, Redi and the non-local part of KPP
+C - advection is affected only if multiDimAdvection=.FALSE.
+C - vertical diffusion (including the diagonal contribution from GMRedi)
+C   only if implicitDiffusion=.FALSE.
+C - GM is affected only if GMREDI_AdvForm=.FALSE.
+C
+C The parameter SmolarkiewiczMaxFrac (defined in gad_init_fixed.F)
+C specifies the maximal fraction of tracer that can leave a cell.
+C By default it is 1.  This will prevent the tracer from going negative
+C due to contributions from gad_calc_rhs alone.  In the presence of other
+C contributions (or roundoff errors), it may be necessary to reduce this
+C value to achieve strict positivity.
+C
+C This hack applies to all tracers except temperature and salinity!
+C Do not use with Adams-Bashforth (for ptracers)!
+C Do not use with OBCS!
 
 
 CBOP
