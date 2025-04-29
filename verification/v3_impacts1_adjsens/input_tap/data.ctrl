@@ -17,10 +17,10 @@
  &CTRL_NML_GENARR
  xx_genarr3d_file(1)       = 'xx_theta',
  xx_genarr3d_weight(1)     = 'ones_64b.bin',
- xx_genarr3d_bounds(1:5,1) = 1.,62.,40.,40.,21.,
+ xx_genarr3d_bounds(1:5,1) = 1.,62.,26.,26.,14.,
 #
  xx_genarr3d_file(2)       = 'xx_salt',
  xx_genarr3d_weight(2)     = 'ones_64b.bin',
- xx_genarr3d_bounds(1:5,2) = 1.,62.,40.,40.,21.,
+ xx_genarr3d_bounds(1:5,2) = 1.,62.,26.,26.,14.,
 #
  &

@@ -39,11 +39,11 @@ C     ========= Local variables =========================
       parameter( petawatt = 1. _d +15 )
 
 C     80W - 0W at 24N
-      parameter( isecbeg = 1, isecend = 62, jsec = 40 )
+      parameter( isecbeg = 1, isecend = 62, jsec = 26 )
 cph      parameter( isecbeg = 70, isecend = 90, jsec = 30 )
       parameter( jsecbeg = 1, jsecend = 62, isec = 30 )
 #ifdef ALLOW_COST_ATLANTIC_HEAT_DOMASS
-      parameter ( kmaxdepth = 21 )
+      parameter ( kmaxdepth = 14 )
 #else
       parameter ( kmaxdepth = 14 )
 #endif
