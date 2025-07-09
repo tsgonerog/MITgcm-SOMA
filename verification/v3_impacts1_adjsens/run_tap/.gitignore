@@ -1,5 +1,0 @@
-# Ignore all files
-*
-
-# But do not ignore this one
-!output_tap_adj.txt

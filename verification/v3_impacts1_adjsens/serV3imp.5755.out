@@ -1,0 +1,2 @@
+ link files: bathymetry.bin lev_s.bin lev_sss.bin lev_sst.bin lev_t.bin ncep_emp.bin ncep_qnet.bin trenberth_taux.bin trenberth_tauy.bin from dir: ../../tutorial_global_oce_latlon/input
+ link files: ones_64b.bin from dir: ../../isomip/input_ad

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH -J v3_impacts1_adjsens
-#SBATCH -o v3_impacts1_adjsens.%j.out
-#SBATCH -e v3_impacts1_adjsens.%j.err
+#SBATCH -J serV3imp
+#SBATCH -o serV3imp.%j.out
+#SBATCH -e serV3imp.%j.err
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -t 48:00:00
@@ -17,9 +17,9 @@ module load netcdf-fortran/4.6.0
 module load netcdf/4.9.0
 
 # Prepare run directory and execute model
-cd run_tap
+cd run_tap_serial
 rm *
 ln -s ../input_tap/* .
 ../input_tap/prepare_run
-ln -s ../build_tap/mitgcmuv_tap_adj .
+ln -s ../build_tap_serial/mitgcmuv_tap_adj .
 ./mitgcmuv_tap_adj > output_tap_adj.txt 2>&1
