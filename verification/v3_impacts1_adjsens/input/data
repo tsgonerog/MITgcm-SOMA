@@ -46,12 +46,11 @@
  pChkptFreq=622080000.,
  chkptFreq=155520000.,
  dumpFreq=0,
- monitorFreq=1200.,
+ monitorFreq=2592000.,
  monitorSelect=2,
  tauThetaClimRelax=2592000.,
 #-for longer run (100 yrs)
  endTime = 3110400000.,
- monitorFreq=2592000.,
  &
 
 # Gridding parameters

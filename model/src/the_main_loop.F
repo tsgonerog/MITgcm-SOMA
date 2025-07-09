@@ -630,7 +630,8 @@ c--         choice of the 3-tupel ( nchklev_1, nchklev_2, nchklev_3 ).
             if ( iloop .le. nTimeSteps ) then
 
 #  else /* ALLOW_TAMC_CHECKPOINTING  undefined */
-
+C TANVIR
+C$AD BINOMIAL-CKP nTimeSteps+1 5 1
       DO iloop = 1, nTimeSteps
 
 c++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -640,6 +641,8 @@ c++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 c++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #ifndef ALLOW_AUTODIFF
+C SHAHRIAR
+C$AD BINOMIAL-CKP nTimeSteps+1 5 1
       DO iloop = 1, nTimeSteps
 #endif /* ALLOW_AUTODIFF */
 
