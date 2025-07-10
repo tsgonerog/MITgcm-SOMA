@@ -3,4 +3,3 @@
 
 # But do not ignore this one
 !output_tap_adj.txt
-!STDOUT.0000
