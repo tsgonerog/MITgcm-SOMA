@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH -J v3_impacts1_adjsens
-#SBATCH -o v3_impacts1_adjsens.%j.out
-#SBATCH -e v3_impacts1_adjsens.%j.err
+#SBATCH -J parV3imp
+#SBATCH -o parV3imp.%j.out
+#SBATCH -e parV3imp.%j.err
 #SBATCH -N 2
 #SBATCH -n 4
 #SBATCH -t 48:00:00
@@ -19,9 +19,11 @@
 #module load prun
 
 # Prepare run directory and execute model
-cd run_tap
+cd run_tap_parallel
+rm *
 ln -s ../input_tap/* .
 ../input_tap/prepare_run
-ln -s ../build_tap/mitgcmuv_tap_adj .
+ln -s ../build_tap_parallel/mitgcmuv_tap_adj .
 #prun ./mitgcmuv_tap_adj > output_tap_adj.txt 2>&1
 mpiexec -n 4 ./mitgcmuv_tap_adj > output_tap_adj.txt 2>&1
+

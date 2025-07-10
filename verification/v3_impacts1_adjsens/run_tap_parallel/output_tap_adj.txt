@@ -1,0 +1,19 @@
+ ph-test icomp, ncvarcomp, ichknum           82       20572           1
+ ph-grd _loc: bi, bj, icomptest, ichknum            1           1           0           1
+ ph-grd -->hit<--           13           8           1           1
+ ph-test icomp, ncvarcomp, ichknum           83       20572           2
+ ph-grd _loc: bi, bj, icomptest, ichknum            1           1          82           2
+ ph-grd -->hit<--           14           8           1           1
+ ph-test icomp, ncvarcomp, ichknum           84       20572           3
+ ph-grd _loc: bi, bj, icomptest, ichknum            1           1          83           3
+ ph-grd -->hit<--           15           8           1           1
+ ph-test icomp, ncvarcomp, ichknum           85       20572           4
+ ph-grd _loc: bi, bj, icomptest, ichknum            1           1          84           4
+ ph-grd -->hit<--           16           8           1           1
+ ph-test icomp, ncvarcomp, ichknum           86       20572           5
+ ph-grd _loc: bi, bj, icomptest, ichknum            1           1          85           5
+ ph-grd -->hit<--           17           8           1           1
+NORMAL END
+NORMAL END
+NORMAL END
+NORMAL END
